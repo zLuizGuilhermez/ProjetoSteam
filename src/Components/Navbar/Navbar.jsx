@@ -6,9 +6,10 @@ import logoWeb from '../../assets/Logoweb.png'
 
 
 
-const navbar = ({theme,setTheme}) =>{
+const Navbar = ({theme,setTheme}) =>{
+
     const ToggleMode = () =>{
-      theme == 'light' ? setTheme('dark') : setTheme('light')
+      theme == 'dark' ? setTheme('light') : setTheme('dark')
   
     }
 
@@ -23,7 +24,7 @@ const navbar = ({theme,setTheme}) =>{
   
               </ul>
   
-              <img onClick={()=>{ToggleMode()}} src={theme == 'light' ? modeLight : modeDark} className='toggle-icon'></img>
+              <img onClick={()=>{ToggleMode()}} src={theme == 'dark' ? modeDark: modeLight} className='toggle-icon'></img>
   
           </div>
   

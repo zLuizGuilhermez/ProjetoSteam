@@ -10,4 +10,10 @@
   width: 100vw;
   min-height: 100vh;
   background-color: rgb(68, 53, 53);
+  transition: 0.5s;
+}
+
+
+.container.light{
+  background-color: white;
 }
