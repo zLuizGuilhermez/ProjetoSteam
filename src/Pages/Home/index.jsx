@@ -1,17 +1,18 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './Style.css'
+import Navbar from '../../Components/Navbar/navbar'
 
-function App() {
 
+const Home = () => {
+  
+  const [theme, setTheme] = useState('light')
+  
   return (
-    <div>
-      <h1>
-        Ola 
-      </h1>
+
+    <div className='container'>
+      <Navbar theme={theme} setTheme={setTheme}/>
     </div>
   )
 }
 
-export default App
+export default Home
