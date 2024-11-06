@@ -1,14 +1,27 @@
 import { useState } from 'react';
 import './Style.css';
-import Navbar from '../../Components/Navbar/navbar'; 
+import Navbar from '../../Components/Navbar/navbar'
+import Search from '../../Components/Search/Search'
 
 const Home = () => {
 
-    const [theme,setTheme] = useState('dark');
+    const [theme, setTheme] = useState('dark');
 
     return (
         <div className={`container ${theme}`}>
-            <Navbar theme={theme} setTheme={setTheme}/>
+            <Navbar theme={theme} setTheme={setTheme} />
+
+            <div className={`tituloSite ${theme}`}>
+                <h1>
+                    Steam Info Finder
+                </h1>
+            </div>
+
+            <Search theme={theme} />
+
+
+            
+
         </div>
     );
 };
