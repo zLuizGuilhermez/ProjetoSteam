@@ -19,8 +19,6 @@ const Navbar = ({theme,setTheme}) =>{
               <ul className='nav-list'>
                 <li>Home</li>
                 <li>About</li>
-                <li></li>
-                <li></li>
   
               </ul>
   
