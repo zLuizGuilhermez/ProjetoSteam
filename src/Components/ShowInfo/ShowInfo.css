@@ -1,32 +1,96 @@
-.InfoShow{
+.real-container{
+    height: 40vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Status 1: Tela inicial */
+.status-1 {
+    height: 40vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Status 2: Resultado encontrado */
+.status-2 {
+    height: 40vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/* Status 3: Erro */
+.status-3 {
+    height: 40vh;
+    background-color: #fab1a0;
+}
+
+.InfoContainer{
+    border-radius: 5px;
+    width: 75%;
+    height: 30vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    
+}
+
+.InfoShow {
+    display: flex;
+    justify-content: center;
     background-color: #00b894;
     border-radius: 2px;
     padding: 2px;
-    margin-top: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
+    width: 50%; /* Tamanho padrão */
+}
+
+
+/* HeaderType-2: Resultado encontrado */
+.HeaderType-2 {
+    display: flex;
+    justify-content: center;
+    background-color: #00b894;
+    border-radius: 2px;
+    padding: 2px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Expande até as bordas do contêiner */
+    height: 100%; /* Ocupa toda a altura do contêiner */
+}
+
+/* HeaderType-3: Erro */
+.HeaderType-3 {
+    background-color: #fab1a0; /* Cor de erro */
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
+    padding: 10px;
 }
 
 .TextShow{
-    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .HelpInfo{
     color: black;
 }
 
-.InfoContainer{
-    background-color: white;
-    border-radius: 2px;
-    padding: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
 
+.ShowPerfilInfos{
+    display: flex;
+    flex-direction: column;
 }
+
+.InfoDetails h2, pre, p, strong{
+    color: black;
+}
+

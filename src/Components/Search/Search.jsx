@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import searchButton from '../../assets/search-w.png'
 import '../Search/Search.css'
 
-const Search = () => {
+const Search = ({ saveid }) => {
 
     const [id,setid] = useState('');
 
@@ -13,7 +13,7 @@ const Search = () => {
 
     const click = () => {
         console.log('Searching for:', id);
-        saveid(id)
+        saveid(id);
     };
     
 

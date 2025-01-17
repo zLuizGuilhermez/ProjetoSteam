@@ -11,6 +11,7 @@
   min-height: 100vh;
   background-color: rgb(32, 32, 32);
   transition: 0.5s;
+  gap: 10px;
 }
 
 
@@ -20,9 +21,10 @@
 
 .tituloSite h1 {
   font-size: 2rem;
-  text-align: left;
-  padding-left: 15%;
-  padding-top: 5%;
+  height: 10rem;
+  display: flex;
+  align-items: center;
+  padding-left: 12%;
   transition: 0.5s;
 }
 
