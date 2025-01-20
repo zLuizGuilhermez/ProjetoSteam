@@ -4,54 +4,53 @@ import axios from 'axios';
 
 const ShowInfo = ({ id }) => {
     const [info, setInfo] = useState(null);
-    const [status, setStatus] = useState(1); // 1 = Search Info, 2 = Sucesso, 3 = Erro
-    const [HeaderType, setHeaderType] = useState(1); // Controle para a classe do cabeçalho
-
-    const fetchInfo = async (id) => {
-        if (id.length === 17 && !isNaN(id)) {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/infoController/toInfoService/${id}`);
-                setInfo(response.data);
-                setStatus(2); // Sucesso
-                setHeaderType(2); // Resultado encontrado
-            } catch (error) {
-                console.error("Erro ao buscar as informações:", error);
-                setStatus(3); // Erro
-                setHeaderType(3); // Cabeçalho de erro
-            }
-        }
-    };
+    const [status, setStatus] = useState(1); // 1 = Aguardando busca, 2 = Sucesso, 3 = Erro
 
     useEffect(() => {
-        if (id) {
+        if (id && id.length === 17 && !isNaN(id)) {
             fetchInfo(id);
         }
     }, [id]);
 
-    return (
-        <div className={`real-container status-${status}`}> {/* Status adicionado dinamicamente */}
+    const fetchInfo = async (id) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/infoController/toInfoService/${id}`);
+            setInfo(response.data);
+            setStatus(2); // Sucesso
+        } catch (error) {
+            console.error("Erro ao buscar informações:", error);
+            setStatus(3); // Erro
+        }
+    };
 
+    return (
+        <div className={`real-container status-${status}`}>
             <div className="InfoContainer">
-                {status === 1 && (  /* Tela inicial */
+                {status === 1 && (
                     <>
-                        <div className={`InfoShow HeaderType-${HeaderType}`}> {/* HeaderType-1 */}
-                            <div className="info-text-container">
-                                <h1 className='TextShow'>Steam Info Finder</h1>
-                            </div>
+                        <div className="InfoShow">
+                            <h1>Steam Info Finder</h1>
                         </div>
-                        <h1 className='HelpInfo'>Search your Steam info is easy. Just put your SteamID or account URL.</h1>
+                        <h2>Search your Steam info is easy. Just enter your SteamID or profile URL.</h2>
                     </>
                 )}
 
-                {status === 2 && info && (  /* Resultado encontrado */
+                {status === 2 && info && (
                     <>
-                            <div className={`InfoShow HeaderType-${HeaderType}`}> {/* HeaderType-2 */}
-                                <h1 className='TextShow'>Result</h1>
-                                
-                            </div>
-                                <div className="ShowPerfilInfos">
+                        <div className="InfoShow">
+                            <h1>Result</h1>
+                        </div>
+                        <div className="ShowPerfilInfos">
                             <div className="InfoDetails">
-                                <h2>Steam Info:</h2>
+                                <div>
+                                    <video src={info.Background} alt="Steam Avatar" />
+
+                                    <div>
+                                        <img src={info.avatarmedium} alt="Steam Avatar" />
+
+                                    </div>
+
+                                </div>
                                 <p><strong>Username:</strong> {info.personaname}</p>
                                 <pre>{JSON.stringify(info, null, 2)}</pre>
                             </div>
@@ -59,10 +58,9 @@ const ShowInfo = ({ id }) => {
                     </>
                 )}
 
-                {status === 3 && (  /* Erro */
-                    <h1 className='ErrorInfo'>❌ Erro ao buscar informações. Verifique o SteamID e tente novamente.</h1>
+                {status === 3 && (
+                    <h1 className="ErrorInfo">❌ Erro ao buscar informações. Verifique o SteamID e tente novamente.</h1>
                 )}
-
             </div>
         </div>
     );
