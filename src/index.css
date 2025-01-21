@@ -1,12 +1,8 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  @apply h-full;
 }
 
-body{
-  min-height: 100vh;
-  width: 100vw;
-  background-color: black;
-}

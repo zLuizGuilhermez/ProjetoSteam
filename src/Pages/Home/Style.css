@@ -1,33 +1,7 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-  color: white;
+:root{
+    --main-yellow:rgba(237, 255, 162, 0.8);
 }
 
-.container{
-  width: 100vw;
-  min-height: 100vh;
-  background-color: rgb(32, 32, 32);
-  transition: 0.5s;
-  gap: 10px;
-}
-
-
-.container.light{
-  background-color: white;
-}
-
-.tituloSite h1 {
-  font-size: 2rem;
-  height: 10rem;
-  display: flex;
-  align-items: center;
-  padding-left: 12%;
-  transition: 0.5s;
-}
-
-.tituloSite.light h1{
-  color: black;
+.tituloSite.light{
+    color: black;
 }
