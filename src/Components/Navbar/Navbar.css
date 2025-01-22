@@ -1,0 +1,14 @@
+.cor {
+    background: linear-gradient(to right, rgb(168, 85, 247), rgb(236, 72, 153));
+    transition: background 1s ease; /* Ajuste a duração e o tipo de transição conforme necessário */
+  }
+  
+
+.cor-light{
+    background-image: linear-gradient(to right, rgb(236, 72, 153), rgb(168, 85, 247));
+
+}
+
+.cor-dark{
+    background-image: linear-gradient(to right, white, #b5b6b8);
+}

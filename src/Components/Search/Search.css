@@ -1,22 +1,21 @@
 .inter {
     font-family: "Inter", serif;
-    font-optical-sizing: auto;
-    font-weight: 400; /* Substitua pelo peso desejado */
+    font-optical-sizing: auto; /* Substitua pelo peso desejado */
     font-style: italic;
     font-weight: 700;
   }
   
+.cor {
+    background: linear-gradient(to right, rgb(168, 85, 247), rgb(236, 72, 153));
+    transition: background 1s ease; /* Ajuste a duração e o tipo de transição conforme necessário */
+  }
+  
 
-/* Ajuste da fonte da div pai do Search em telas menores */
-@media (max-width: 500px) {
-    .search-container {
-        font-size: 0.3rem; /* Ajuste para o tamanho de fonte desejado em telas pequenas */
-    }
+.cor-light{
+    background-image: linear-gradient(to right, rgb(236, 72, 153), rgb(168, 85, 247));
+
 }
 
-/* Para textos específicos dentro da div pai */
-@media (max-width: 500px) {
-    .inter {
-        font-size: 0.5rem; /* Ajuste o tamanho do texto conforme necessário */
-    }
+.cor-dark{
+    background-image: linear-gradient(to right, white, #b5b6b8);
 }

@@ -7,6 +7,15 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        'custom-black': 'rgb(12,0,21)',  // Usando RGB
+        'custom-red': 'rgb(255, 99, 71)',    // Outro exemplo de cor RGB
+      },
+      screens: {
+        sm: '640px',  // Pequenas telas
+        md: '768px',  // Médias telas
+        lg: '1024px', // Telas grandes
+      },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
       },

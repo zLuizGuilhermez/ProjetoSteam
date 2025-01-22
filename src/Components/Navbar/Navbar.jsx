@@ -8,7 +8,8 @@ const Navbar = ({theme, setTheme}) => {
   const [menuOpen, setMenuOpen] = useState(false); // Estado para controlar o menu no celular
   
   const ToggleMode = () => {
-    theme === 'dark' ? setTheme('light') : setTheme('dark');
+    theme === 'light' ? setTheme('dark') : setTheme('light');  // Verifique no console se o tema está sendo alterado corretamente
+
   }
 
   const toggleMenu = () => {
@@ -19,17 +20,17 @@ const Navbar = ({theme, setTheme}) => {
     <div className="w-full sm:w-2/3 flex items-center mt-24 justify-between border border-gray-500 rounded-lg bg-transparent shadow-xl p-4 text-white h-14">
       <div className="flex items-center space-x-2">
         <a href='index.jsx' className="text-xl font-bold">
-          <span className="text-white">Steam</span> 
+        <span className={`cor-${theme} bg-clip-text text-transparent`}>Steam </span>
           <span className="text-purple-500">Infofinder</span>
         </a>
       </div>
   
       <div className="flex items-center space-x-6 text-lg hidden sm:flex">
-        <a href="index.jsx" className="font-bold text-white border-b-2 border-white">Home</a>
+        <a href="index.jsx" className={`corMenu-${theme} font-bold border-b-2 border-white`}>Home</a>
         <a href="#" className="text-gray-300 hover:text-white transition">Sobre nós</a>
   
         <button onClick={ToggleMode} className="bg-purple-500 p-2 rounded-lg">
-          <img src={theme === 'dark' ? modeDark : modeLight} className="w-5" alt="Toggle theme" />
+          <img src={theme === 'light' ? modeLight : modeDark} className="w-5" alt="Toggle theme" />
         </button>
       </div>
       
