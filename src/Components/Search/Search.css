@@ -19,3 +19,15 @@
 .cor-dark{
     background-image: linear-gradient(to right, white, #b5b6b8);
 }
+
+.corTexto-light{
+    color: black;
+}
+
+.corInput-light {
+  text-decoration-color: black;
+  color: black; /* Adiciona a cor preta ao texto do input no tema claro */
+}
+.corInput-dark{
+  text-decoration-color: white;
+}
