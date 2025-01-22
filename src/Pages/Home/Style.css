@@ -5,3 +5,15 @@
 .tituloSite.light{
     color: black;
 }
+
+/* Adicione isso ao seu arquivo CSS */
+html, body {
+    height: 100%; /* Faz com que o HTML e o Body ocupem 100% da altura da tela */
+    margin: 0; /* Remove as margens padrão */
+  }
+  
+  #root {
+    min-height: 100%; /* Faz com que o root div ocupe 100% da altura disponível */
+    flex-direction: column; /* Faz com que o conteúdo fique disposto de forma vertical */
+  }
+  

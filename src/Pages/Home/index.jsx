@@ -1,6 +1,6 @@
 import './Style.css';
 import Navbar from '../../Components/Navbar/navbar';
-import {useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Search from '../../Components/Search/Search';
 import ShowInfo from '../../Components/ShowInfo/ShowInfo';
 
@@ -22,19 +22,20 @@ const Home = () => {
         }
     }, [theme]);
 
-
     return (
-            <div>
-                <Navbar theme={theme} setTheme={setTheme} />
-    
-                <div className={`text-xl flex justify-center font-extrabold text-4xl items-center text-black mt-6 dark:text-white duration-300 `}>
-                    <h1>SteamInfoFinder</h1>
-                </div>
-
-                <Search theme={theme} saveid={saveid} />
-                <ShowInfo theme={theme} id={id} /> {/* Passa o ID normalmente */}
-
+        <div className="h-screen w-full">
+            <div className="absolute h-4/6 w-2/4 rounded-full blur-3xl opacity-10 -top-80 -left-96 bg-purple-700">
+                <p className="">a</p>
             </div>
+            <div className='flex justify-center'>
+                <Navbar theme={theme} setTheme={setTheme} />
+            </div>
+            <div className='flex justify-center mt-12 h-1/2'>
+                <Search theme={theme} saveid={saveid} />
+            </div>
+
+            {/* <ShowInfo theme={theme} id={id} /> */}
+        </div>
     );
 };
 
