@@ -1,0 +1,13 @@
+.inter {
+    font-family: "Inter", serif;
+    font-optical-sizing: auto; /* Substitua pelo peso desejado */
+    font-style: normal;
+    font-weight: 400;
+  }
+
+.interCampo {
+    font-family: "Inter", serif;
+    font-optical-sizing: auto; /* Substitua pelo peso desejado */
+    font-style: normal;
+    font-weight: 200;
+  }
