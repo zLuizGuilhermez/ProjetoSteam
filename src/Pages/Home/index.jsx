@@ -51,7 +51,7 @@ const Home = () => {
       )}
 
       {componente === "new" && (
-        <div className="flex justify-center mt-12 h-[150vh]">
+        <div className="flex justify-center mt-12 h-auto">
           <ShowInfo id={id} Componente={componente} theme={theme} />
         </div>
       )}
