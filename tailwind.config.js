@@ -13,9 +13,9 @@ export default {
         'custom-purple': 'rgb(20, 4, 34)',    // Corrigido
       },
       screens: {
-        sm: '640px',  // Pequenas telas
-        md: '768px',  // Médias telas
-        lg: '1024px', // Telas grandes
+        sm: '390px',  // Pequenas telas
+        md: '810px',  // Médias telas
+        lg: '1440px', // Telas grandes
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
