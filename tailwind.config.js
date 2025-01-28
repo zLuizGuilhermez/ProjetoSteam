@@ -10,7 +10,8 @@ export default {
       colors: {
         'custom-black': 'rgb(12,0,21)',  // Usando RGB
         'custom-red': 'rgb(255, 99, 71)',
-        'custom-purple': 'rgb(20, 4, 34)',    // Corrigido
+        'custom-purple': 'rgb(20, 4, 34)',
+        'custom-campos': 'rgb(34, 15, 51)',    // Corrigido
       },
       screens: {
         sm: '390px',  // Pequenas telas

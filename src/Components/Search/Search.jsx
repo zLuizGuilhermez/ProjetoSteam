@@ -3,15 +3,34 @@ import searchButton from "../../assets/search-w.png";
 import "../Search/Search.css";
 
 const Search = ({ saveid, theme, trocarComponente, Componente }) => {
+  const [forValidation,setForValidation] = useState("");
   const [id, setid] = useState("");
 
   const change = (event) => {
-    setid(event.target.value);
+    setForValidation(event.target.value);
   };
-  const click = () => {
-    console.log("Searching for:", id);
-    saveid(id);
+
+
+  const inputFilter = () => {
+    if (forValidation.includes("https://steamcommunity.com/id/")) {
+      // Extraindo tudo depois de "/id/" e parando na próxima "/"
+      const extracted = forValidation.split("/id/")[1].split("/")[0]; 
+      saveid(extracted); // Salva somente o ID extraído corretamente
+    }else if(forValidation.includes("https://steamcommunity.com/profiles/")){
+      const extracted = forValidation.split("/profiles/")[1].split("/")[0]; 
+      saveid(extracted);
+    }
   };
+  
+
+
+  const validacao = () =>{
+    if (forValidation && forValidation.length === 17 && !isNaN(id)) {
+      saveid(forValidation);
+    }else if(forValidation && forValidation.length >= 27 && !isNaN(id)){
+      inputFilter(id)
+    }
+  }
 
   const trocarC = () => {
     trocarComponente("new");
@@ -68,8 +87,8 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
               <button
                 className="w-16 border border-purple-500 shadow-lg shadow-purple-500/50 hover:bg-purple-500 duration-300 rounded-r-lg flex items-center justify-center bg-transparent"
                 onClick={() => {
-                  click();
-                  if (id != "") {
+                  validacao();
+                  if (forValidation != "") {
                     trocarC();
                   }
                 }}

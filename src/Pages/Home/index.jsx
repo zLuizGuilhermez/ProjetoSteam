@@ -61,23 +61,30 @@ const Home = () => {
             <ShowInfo id={id} Componente={componente} theme={theme} />
           </div>
           <div className="flex justify-center">
-  <div className="mt-6 w-2/3 h-64 border-2 border-gray-500 rounded-lg shadow-lg overflow-hidden">
-    <Swiper
-      modules={[Navigation, Pagination]}
-      loop={true}
-      navigation
-      pagination={{ clickable: true }}
-      className="mySwiper h-full"
-    >
-      <SwiperSlide className="flex justify-center h-full items-center">
-        <img src={modeLight} alt="Slide 1" className="object-cover h-full w-full" />
-      </SwiperSlide>
-      <SwiperSlide className="flex justify-center items-center  text-white">Slide 2</SwiperSlide>
-      <SwiperSlide className="flex justify-center items-center  text-white">Slide 3</SwiperSlide>
-    </Swiper>
-  </div>
-</div>
-
+            <div className="mt-6 w-2/3 h-64 border-2 border-gray-500 rounded-lg shadow-lg overflow-hidden">
+              <Swiper
+                modules={[Navigation, Pagination]}
+                loop={true}
+                navigation
+                pagination={{ clickable: true }}
+                className="mySwiper h-full"
+              >
+                <SwiperSlide className="flex justify-center h-full items-center">
+                  <img
+                    src={modeLight}
+                    alt="Slide 1"
+                    className="object-cover h-full w-full"
+                  />
+                </SwiperSlide>
+                <SwiperSlide className="flex justify-center items-center  text-white">
+                  Slide 2
+                </SwiperSlide>
+                <SwiperSlide className="flex justify-center items-center  text-white">
+                  Slide 3
+                </SwiperSlide>
+              </Swiper>
+            </div>
+          </div>
         </div>
       )}
     </div>
