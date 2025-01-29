@@ -8,12 +8,11 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import ApiOutlinedIcon from "@mui/icons-material/ApiOutlined";
-import NotInterestedIcon from "@mui/icons-material/NotInterested";
 import GppMaybeOutlinedIcon from "@mui/icons-material/GppMaybeOutlined";
 import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
 
 const ShowInfo = ({ id, Componente, theme }) => {
-  const [info, setInfo] = useState(null);
+  const [info, setInfo] = useState({});
   const [idNew, setId] = useState("");
   const [idAfterUrL, setIdAfterUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -46,6 +45,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
       setVacStatus(responseVac.data);
       setPlayerlevel(responseLevel.data);
       setInfo(response.data);
+      setBackgroundStatus(response.status)
     } catch (error) {
       console.error("Erro ao buscar informações:", error);
     } finally {
@@ -125,7 +125,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
               animation="wave"
               sx={{ bgcolor: "grey.900" }}
             />
-          ) : info ? (
+          ) : info && info.status === 1 ? (
             <div className="w-full h-full relative">
               <video
                 src={info.background}
@@ -169,7 +169,51 @@ const ShowInfo = ({ id, Componente, theme }) => {
                 </div>
               </div>
             </div>
-          ) : null}
+          ) :info && info.status === 2 ? (
+            <div className="w-full h-full relative">
+               <img
+                src={info.background}
+                loop
+                autoPlay
+                className="w-full h-full object-cover border-2 border-gray-500 rounded-md"
+              ></img>
+              <div className="transform flex items-center gap-4">
+                <img
+                  className="absolute w-36 h-36 mb-16 ml-9 border-2 border-gray-500 object-cover rounded-lg"
+                  src={info.avatarfull}
+                  alt="Steam Avatar"
+                />
+                <div className="flex">
+                  <div className="">
+                    {info.personaname && (
+                      <p className="text-neutral-300 ml-48 text-lg font-semibold">
+                        {info.personaname}
+                      </p>
+                    )}
+                    <div className="flex">
+                      <div className="ml-48  ">
+                        <p className=" text-base font-semibold text-neutral-300">
+                          Level
+                        </p>
+                      </div>
+                      <div className=" ml-2 rounded-xl w-6 flex justify-center border ">
+                        <div className="text-neutral-300 text-sm ">
+                          {PlayerLevel.player_level}
+                        </div>
+                      </div>
+
+                    </div>
+                      <div className="ml-48 mt-1 h-6 w-6">
+                        <img
+                          className=" border-2 border-gray-500 h-full w- rounded-xl"
+                          src={info.flagUrL}
+                        ></img>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ): null}
         </div>
 
         <div className="gap-6 mt-24 grid lg:grid-cols-2 lg:text-lg md:text-sm sm:text-xs sm:grid-cols-1">
