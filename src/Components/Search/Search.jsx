@@ -21,6 +21,54 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
       saveid(extracted);
     }
   };
+
+  const id2To64 = () =>{
+    
+    const STEAM64_BASE = 76561197960265728n; // BigInt
+
+    const match = forValidation.match(/^STEAM_\d:(\d):(\d+)$/);
+    if (!match) throw new Error("Formato inválido de Steam2ID");
+    
+    const Y = BigInt(parseInt(match[1], 10)); // Convertendo para BigInt
+    const accountID = BigInt(parseInt(match[2], 10)); // Convertendo para BigInt
+    
+    const steamID32 = (accountID * 2n) + Y; // Operações com BigInt
+    
+    const result = (steamID32 + STEAM64_BASE).toString(); // Converte para String
+    
+    saveid(result);
+    
+
+
+  }
+
+  const id3To64 = () =>{
+    const STEAM64_BASE = 76561197960265728n;
+
+    if(forValidation.startsWith("[U:")){
+
+      const match = forValidation.match(/^\[U:1:(\d+)\]$/);
+      
+      const accountID = BigInt(match[1]); // Extrai o AccountID como BigInt
+  
+      // Calcula o Steam64 ID
+      const result = (accountID + STEAM64_BASE).toString(); // Converte para String
+      
+      saveid(result);
+    }else if(forValidation.startsWith("U:")){
+      
+      const match = forValidation.match(/^U:1:(\d+)$/);
+      
+      const accountID = BigInt(match[1]); // Extrai o AccountID como BigInt
+  
+      // Calcula o Steam64 ID
+      const result = (accountID + STEAM64_BASE).toString(); // Converte para String
+      
+      saveid(result);
+    }
+
+
+  }
   
 
 
@@ -29,6 +77,18 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
       saveid(forValidation);
     }else if(forValidation && forValidation.length >= 27 && !isNaN(id)){
       inputFilter(id)
+    }else if(forValidation.startsWith("STEAM_")){
+
+      id2To64(forValidation);
+
+    }else if(forValidation.startsWith("[U:")){
+      
+      id3To64(forValidation);
+      
+    }else if(forValidation.startsWith("U:")){
+
+      id3To64(forValidation);
+    
     }
   }
 
@@ -81,7 +141,7 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
               <input
                 onChange={change}
                 type="text"
-                placeholder="https://steamcommunity.com/id/exemplo..."
+                placeholder="Enter with steam url, steam64 ID, steam3 ID, steam2 ID "
                 className={`w-full corInput-${theme} pl-4 border border-purple-500 rounded-l-lg focus:ring-0 focus:outline-none bg-transparent text-white placeholder-gray-400 text-xs sm:text-sm`}
               />
               <button

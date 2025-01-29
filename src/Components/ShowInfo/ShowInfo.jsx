@@ -58,20 +58,18 @@ const ShowInfo = ({ id, Componente, theme }) => {
       const response = await axios.get(
         `http://localhost:8080/api/infoController/toChangeUrlToId/${id}`
       );
-  
+
       // Pegando apenas o ID correto
       const steamID = response.data.steamid.replace(/'/g, ""); // Remove aspas simples, se houver
-  
+
       setIdAfterUrl(steamID); // Atualiza o estado com o ID limpo
-  
+
       // Buscar informações do usuário com o ID tratado
       fetchInfo(steamID);
-  
     } catch (error) {
       console.error("Erro ao buscar ID:", error);
     }
   };
-  
 
   useEffect(() => {
     if (id && id.length === 17 && Number(id)) {
@@ -137,12 +135,12 @@ const ShowInfo = ({ id, Componente, theme }) => {
               />
               <div className="transform flex items-center gap-4">
                 <img
-                  className="absolute w-36 h-36 mb-9 ml-9 border-2 border-gray-500 object-cover rounded-lg"
+                  className="absolute w-36 h-36 mb-16 ml-9 border-2 border-gray-500 object-cover rounded-lg"
                   src={info.avatarfull}
                   alt="Steam Avatar"
                 />
                 <div className="flex">
-                  <div className="mr-1">
+                  <div className="">
                     {info.personaname && (
                       <p className="text-neutral-300 ml-48 text-lg font-semibold">
                         {info.personaname}
@@ -159,13 +157,14 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           {PlayerLevel.player_level}
                         </div>
                       </div>
+
                     </div>
-                  </div>
-                  <div className=" mt-1 h-6 w-6">
-                    <img
-                      className=" border-2 border-gray-500 h-full w- rounded-xl"
-                      src={info.flagUrL}
-                    ></img>
+                      <div className="ml-48 mt-1 h-6 w-6">
+                        <img
+                          className=" border-2 border-gray-500 h-full w- rounded-xl"
+                          src={info.flagUrL}
+                        ></img>
+                      </div>
                   </div>
                 </div>
               </div>
