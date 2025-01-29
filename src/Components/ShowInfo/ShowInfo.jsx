@@ -247,9 +247,16 @@ const ShowInfo = ({ id, Componente, theme }) => {
                       </div>
                       <div
                         className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
-                        onClick={() => copy(info?.steamid)}
+                        onClick={() => copy(info?.steamid)
+
+                        }
+
                       >
+                        <Tooltip title="Copy" placement="right">
                         <ContentCopyIcon className="text-neutral-300" />
+
+
+                        </Tooltip>
                       </div>
                     </div>
                     <div className="flex justify-between border rounded-md border-gray-500">
