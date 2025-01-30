@@ -157,8 +157,8 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           Level
                         </p>
                       </div>
-                      <div className=" ml-2 rounded-xl w-6 flex justify-center border ">
-                        <div className="text-neutral-300 text-sm ">
+                      <div className=" ml-2 items-center rounded-xl w-6 flex justify-center border ">
+                        <div className="text-neutral-300 text-xs ">
                           {PlayerLevel.player_level}
                         </div>
                       </div>
