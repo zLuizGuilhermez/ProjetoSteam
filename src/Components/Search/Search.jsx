@@ -6,35 +6,36 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
   const [forValidation,setForValidation] = useState("");
   const [id, setid] = useState("");
 
+  //muda o estado do input
   const change = (event) => {
     setForValidation(event.target.value);
   };
 
-
+  //retira o nick do url
   const inputFilter = () => {
     if (forValidation.includes("https://steamcommunity.com/id/")) {
-      // Extraindo tudo depois de "/id/" e parando na próxima "/"
       const extracted = forValidation.split("/id/")[1].split("/")[0]; 
-      saveid(extracted); // Salva somente o ID extraído corretamente
+      saveid(extracted); 
     }else if(forValidation.includes("https://steamcommunity.com/profiles/")){
       const extracted = forValidation.split("/profiles/")[1].split("/")[0]; 
       saveid(extracted);
     }
   };
 
+   // transforma o id2 para 64
   const id2To64 = () =>{
     
-    const STEAM64_BASE = 76561197960265728n; // BigInt
+    const STEAM64_BASE = 76561197960265728n; 
 
     const match = forValidation.match(/^STEAM_\d:(\d):(\d+)$/);
     if (!match) throw new Error("Formato inválido de Steam2ID");
     
-    const Y = BigInt(parseInt(match[1], 10)); // Convertendo para BigInt
-    const accountID = BigInt(parseInt(match[2], 10)); // Convertendo para BigInt
+    const Y = BigInt(parseInt(match[1], 10)); 
+    const accountID = BigInt(parseInt(match[2], 10)); 
     
-    const steamID32 = (accountID * 2n) + Y; // Operações com BigInt
+    const steamID32 = (accountID * 2n) + Y; 
     
-    const result = (steamID32 + STEAM64_BASE).toString(); // Converte para String
+    const result = (steamID32 + STEAM64_BASE).toString(); 
     
     saveid(result);
     
@@ -141,7 +142,7 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
               <input
                 onChange={change}
                 type="text"
-                placeholder="Enter with steam url, steam64 ID, steam3 ID, steam2 ID "
+                placeholder="Enter with steam url, steam64 ID, steam3 ID, steam2 ID..."
                 className={`w-full corInput-${theme} pl-4 border border-purple-500 rounded-l-lg focus:ring-0 focus:outline-none bg-transparent text-white placeholder-gray-400 text-xs sm:text-sm`}
               />
               <button

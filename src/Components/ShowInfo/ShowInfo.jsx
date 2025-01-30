@@ -14,10 +14,18 @@ import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
 const ShowInfo = ({ id, Componente, theme }) => {
   const [info, setInfo] = useState({});
   const [idNew, setId] = useState("");
-  const [idAfterUrL, setIdAfterUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [vacStatus, setVacStatus] = useState("");
   const [PlayerLevel, setPlayerlevel] = useState("");
+  const [tooltipCopy, setToolTipCopy] = useState(0);
+
+  const toolTipChange = (status) => {
+    tooltipCopy === 0 ? setToolTipCopy(1) : setToolTipCopy(0);
+  };
+
+  const toolTipChangeAwait = () => {
+    setTimeout(() => setToolTipCopy(0), 1000);
+  };
 
   const handleInputChange = (event) => {
     setId(event.target.value);
@@ -45,7 +53,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
       setVacStatus(responseVac.data);
       setPlayerlevel(responseLevel.data);
       setInfo(response.data);
-      setBackgroundStatus(response.status)
+      setBackgroundStatus(response.status);
     } catch (error) {
       console.error("Erro ao buscar informações:", error);
     } finally {
@@ -59,12 +67,8 @@ const ShowInfo = ({ id, Componente, theme }) => {
         `http://localhost:8080/api/infoController/toChangeUrlToId/${id}`
       );
 
-      // Pegando apenas o ID correto
-      const steamID = response.data.steamid.replace(/'/g, ""); // Remove aspas simples, se houver
+      const steamID = response.data.steamid.replace(/'/g, "");
 
-      setIdAfterUrl(steamID); // Atualiza o estado com o ID limpo
-
-      // Buscar informações do usuário com o ID tratado
       fetchInfo(steamID);
     } catch (error) {
       console.error("Erro ao buscar ID:", error);
@@ -77,6 +81,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
       fetchInfo(id);
     } else if (id && id.length < 17) {
       console.log("Found ID for URL:", id);
+
       foundID(id);
     }
   }, [id]);
@@ -90,7 +95,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
               <input
                 onChange={handleInputChange}
                 type="text"
-                placeholder="https://steamcommunity.com/id/example..."
+                placeholder="Enter with steam url, steam64 ID, steam3 ID, steam2 ID..."
                 className={`w-full corInput-${theme} pl-4 h-9 rounded-l-lg focus:ring-0 focus:outline-none text-neutral-300 bg-transparent s placeholder-gray-400 text-xs sm:text-sm`}
               />
               <Tooltip title="Search" placement="right-start">
@@ -157,21 +162,20 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           {PlayerLevel.player_level}
                         </div>
                       </div>
-
                     </div>
-                      <div className="ml-48 mt-1 h-6 w-6">
-                        <img
-                          className=" border-2 border-gray-500 h-full w- rounded-xl"
-                          src={info.flagUrL}
-                        ></img>
-                      </div>
+                    <div className="ml-48 mt-1 h-6 w-6">
+                      <img
+                        className=" border-2 border-gray-500 h-full w- rounded-xl"
+                        src={info.flagUrL}
+                      ></img>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          ) :info && info.status === 2 ? (
+          ) : info && info.status === 2 ? (
             <div className="w-full h-full relative">
-               <img
+              <img
                 src={info.background}
                 loop
                 autoPlay
@@ -201,19 +205,18 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           {PlayerLevel.player_level}
                         </div>
                       </div>
-
                     </div>
-                      <div className="ml-48 mt-1 h-6 w-6">
-                        <img
-                          className=" border-2 border-gray-500 h-full w- rounded-xl"
-                          src={info.flagUrL}
-                        ></img>
-                      </div>
+                    <div className="ml-48 mt-1 h-6 w-6">
+                      <img
+                        className=" border-2 border-gray-500 h-full w- rounded-xl"
+                        src={info.flagUrL}
+                      ></img>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          ): null}
+          ) : null}
         </div>
 
         <div className="gap-6 mt-24 grid lg:grid-cols-2 lg:text-lg md:text-sm sm:text-xs sm:grid-cols-1">
@@ -245,19 +248,30 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           {info?.steamid}
                         </span>
                       </div>
-                      <div
-                        className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
-                        onClick={() => copy(info?.steamid)
 
-                        }
-
-                      >
-                        <Tooltip title="Copy" placement="right">
-                        <ContentCopyIcon className="text-neutral-300" />
-
-
-                        </Tooltip>
-                      </div>
+                      {tooltipCopy === 0 ? (
+                        <div
+                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          onClick={() => [
+                            copy(info?.steamid),
+                            toolTipChange(),
+                            toolTipChangeAwait(),
+                          ]}
+                        >
+                          <Tooltip title="Copy" placement="right">
+                            <ContentCopyIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
+                      ) : tooltipCopy === 1 ? (
+                        <div
+                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          onClick={() => [copy(info?.steamid), toolTipChange()]}
+                        >
+                          <Tooltip title="Copied" placement="right">
+                            <ContentCopyIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
+                      ) : null}
                     </div>
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
@@ -270,12 +284,29 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           {info.accountId}
                         </span>
                       </div>
-                      <div
-                        className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
-                        onClick={() => copy(info.accountId)}
-                      >
-                        <ContentCopyIcon className="text-neutral-300" />
-                      </div>
+                      {tooltipCopy === 0 ? (
+                        <div
+                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          onClick={() => [
+                            copy(info?.accountId),
+                            toolTipChange(),
+                            toolTipChangeAwait(),
+                          ]}
+                        >
+                          <Tooltip title="Copy" placement="right">
+                            <ContentCopyIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
+                      ) : tooltipCopy === 1 ? (
+                        <div
+                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          onClick={() => [copy(info?.accountId), toolTipChange()]}
+                        >
+                          <Tooltip title="Copied" placement="right">
+                            <ContentCopyIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
+                      ) : null}
                     </div>
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
@@ -288,12 +319,29 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           {info.steamId2}
                         </span>
                       </div>
-                      <div
-                        className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
-                        onClick={() => copy(info.steamId2)}
-                      >
-                        <ContentCopyIcon className="text-neutral-300" />
-                      </div>
+                      {tooltipCopy === 0 ? (
+                        <div
+                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          onClick={() => [
+                            copy(info?.steamId2),
+                            toolTipChange(),
+                            toolTipChangeAwait(),
+                          ]}
+                        >
+                          <Tooltip title="Copy" placement="right">
+                            <ContentCopyIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
+                      ) : tooltipCopy === 1 ? (
+                        <div
+                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          onClick={() => [copy(info?.steamId2), toolTipChange()]}
+                        >
+                          <Tooltip title="Copied" placement="right">
+                            <ContentCopyIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
+                      ) : null}
                     </div>
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
@@ -313,12 +361,29 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           </a>
                         </span>
                       </div>
-                      <div
-                        className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
-                        onClick={() => copy(info.steamId3)}
-                      >
-                        <ContentCopyIcon className="text-neutral-300" />
-                      </div>
+                      {tooltipCopy === 0 ? (
+                        <div
+                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          onClick={() => [
+                            copy(info?.steamId3),
+                            toolTipChange(),
+                            toolTipChangeAwait(),
+                          ]}
+                        >
+                          <Tooltip title="Copy" placement="right">
+                            <ContentCopyIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
+                      ) : tooltipCopy === 1 ? (
+                        <div
+                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          onClick={() => [copy(info?.steamId3), toolTipChange()]}
+                        >
+                          <Tooltip title="Copied" placement="right">
+                            <ContentCopyIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
+                      ) : null}
                     </div>
                     <div className="flex  justify-between border rounded-md border-gray-500">
                       <div className="w-1/3  border-r p-2 border-gray-500">
@@ -331,12 +396,29 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           {info?.steamid}
                         </span>
                       </div>
-                      <div
-                        className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
-                        onClick={() => copy(info?.steamid)}
-                      >
-                        <ContentCopyIcon className="text-neutral-300" />
-                      </div>
+                      {tooltipCopy === 0 ? (
+                        <div
+                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          onClick={() => [
+                            copy(info?.steamid),
+                            toolTipChange(),
+                            toolTipChangeAwait(),
+                          ]}
+                        >
+                          <Tooltip title="Copy" placement="right">
+                            <ContentCopyIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
+                      ) : tooltipCopy === 1 ? (
+                        <div
+                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          onClick={() => [copy(info?.steamid), toolTipChange()]}
+                        >
+                          <Tooltip title="Copied" placement="right">
+                            <ContentCopyIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 ) : null}
@@ -367,10 +449,11 @@ const ShowInfo = ({ id, Componente, theme }) => {
                       </div>
 
                       {vacStatus.VACBanned === true ? (
-                        <div className="w-2/3 hover:bg-red-600 rounded-md duration-150 flex-1 p-2">
+                        <div className="w-2/3 hover:bg-red-600 rounded-r-md duration-150 flex-1 p-2">
                           <div className="flex justify-between">
                             <span className="lg:text-base text-neutral-300 inter ">
-                              {vacStatus.NumberOfVACBans} Vac Ban
+                              {vacStatus.NumberOfVACBans} Vac Ban (
+                              {vacStatus.DaysSinceLastBan}) days ago
                             </span>
 
                             <GppMaybeOutlinedIcon className="text-red-800"></GppMaybeOutlinedIcon>
@@ -403,7 +486,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           </div>
                         </div>
                       ) : vacStatus.NumberOfGameBans === 1 ? (
-                        <div className="w-2/3 hover:bg-red-800 rounded-md duration-150 flex-1 p-2">
+                        <div className="w-2/3 hover:bg-red-600 rounded-r-md duration-150 flex-1 p-2">
                           <div className="flex justify-between">
                             <span className="lg:text-base inter text-neutral-300">
                               {vacStatus.NumberOfGameBans} Game Banned
@@ -412,7 +495,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
                           </div>
                         </div>
                       ) : vacStatus.NumberOfGameBans > 1 ? (
-                        <div className="w-2/3 hover:bg-red-600 rounded-md duration-150 flex-1 p-2">
+                        <div className="w-2/3 hover:bg-red-600 rounded-r-md duration-150 flex-1 p-2">
                           <div className="flex justify-between">
                             <span className="lg:text-base inter text-neutral-300">
                               {vacStatus.NumberOfGameBans} Games Banned
@@ -477,7 +560,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
           </div>
 
           <div>
-            <div className="flex flex-col mb-3 justify-around bg-custom-purple lg:text-lg sm:text-sm shadow-purple-500/50 p-5 shadow-sm rounded-md">
+            <div className="flex flex-col h-48 mb-3 justify-around bg-custom-purple lg:text-lg sm:text-sm shadow-purple-500/50 p-5 shadow-sm rounded-md">
               <div className="flex items-center justify-center text-neutral-300">
                 <p className="text-xl inter pr-3">Played Hours</p>
                 <AccessTimeIcon />
@@ -486,28 +569,29 @@ const ShowInfo = ({ id, Componente, theme }) => {
                 <Skeleton
                   variant="rounded"
                   width="100%"
-                  height={40}
+                  height="100%"
                   animation="wave"
                   sx={{ bgcolor: "grey.900" }}
                 />
               ) : (
-                [
-                  { label: "Total Hours", value: info?.totalHours },
-                  { label: "Game Hours", value: info?.gameHours },
-                ].map((item, index) => (
-                  <div className="mt-2" key={index}>
-                    <div className="flex justify-between border rounded-md border-gray-500">
-                      <div className="w-1/2 border-r p-2 border-gray-500">
-                        <p className="text-neutral-300 interCampo">
-                          {item.label}
-                        </p>
-                      </div>
-                      <div className="w-2/3 hover:bg-custom-campos duration-150 flex-1 p-2 border-r border-gray-500">
-                        <span className="text-neutral-300">{item.value}</span>
-                      </div>
+                <div className="mt-2 flex flex-col gap-2">
+                  <div className="flex justify-between border rounded-md border-gray-500">
+                    <div className="w-1/2 border-r p-2 border-gray-500">
+                      <p className="text-neutral-300 inter">Total Hours</p>
+                    </div>
+                    <div className="w-2/3 hover:bg-custom-campos duration-150 flex-1 p-2 border-gray-500">
+                      <span className="text-neutral-300"></span>
                     </div>
                   </div>
-                ))
+                  <div className="flex justify-between border rounded-md border-gray-500">
+                    <div className="w-1/2 border-r p-2 border-gray-500">
+                      <p className="text-neutral-300 inter">Total Hours</p>
+                    </div>
+                    <div className="w-2/3 hover:bg-custom-campos duration-150 flex-1 p-2 border-gray-500">
+                      <span className="text-neutral-300"></span>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
           </div>
@@ -519,4 +603,4 @@ const ShowInfo = ({ id, Componente, theme }) => {
   return null;
 };
 
-export default ShowInfo;
+export default React.memo(ShowInfo);
