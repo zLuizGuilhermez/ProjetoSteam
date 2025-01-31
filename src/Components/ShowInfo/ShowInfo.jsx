@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import ApiOutlinedIcon from "@mui/icons-material/ApiOutlined";
 import GppMaybeOutlinedIcon from "@mui/icons-material/GppMaybeOutlined";
 import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
+import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined";
 
 const ShowInfo = ({ id, Componente, theme }) => {
   const [info, setInfo] = useState({});
@@ -18,6 +19,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
   const [vacStatus, setVacStatus] = useState("");
   const [PlayerLevel, setPlayerlevel] = useState("");
   const [tooltipCopy, setToolTipCopy] = useState(0);
+  const [hoursPlayed, setHoursPlayed] = useState("");
 
   const toolTipChange = (status) => {
     tooltipCopy === 0 ? setToolTipCopy(1) : setToolTipCopy(0);
@@ -50,10 +52,14 @@ const ShowInfo = ({ id, Componente, theme }) => {
         `http://localhost:8080/api/infoController/toGetPlayerLevel/${id}`
       );
 
+      const responseHours = await axios.get(
+        `http://localhost:8080/api/infoController/toGetHoursPlayed/${id}`
+      );
+
       setVacStatus(responseVac.data);
       setPlayerlevel(responseLevel.data);
       setInfo(response.data);
-      setBackgroundStatus(response.status);
+      setHoursPlayed(responseHours.data);
     } catch (error) {
       console.error("Erro ao buscar informações:", error);
     } finally {
@@ -236,7 +242,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
                     sx={{ bgcolor: "grey.900" }}
                   />
                 ) : info ? (
-                  <div className="flex flex-col h-full justify-around gap-2">
+                  <div className="flex flex-col h-full justify-between gap-2">
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
                         <p className="text-neutral-300 lg:text-base inter">
@@ -300,7 +306,10 @@ const ShowInfo = ({ id, Componente, theme }) => {
                       ) : tooltipCopy === 1 ? (
                         <div
                           className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
-                          onClick={() => [copy(info?.accountId), toolTipChange()]}
+                          onClick={() => [
+                            copy(info?.accountId),
+                            toolTipChange(),
+                          ]}
                         >
                           <Tooltip title="Copied" placement="right">
                             <ContentCopyIcon className="text-neutral-300" />
@@ -335,7 +344,10 @@ const ShowInfo = ({ id, Componente, theme }) => {
                       ) : tooltipCopy === 1 ? (
                         <div
                           className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
-                          onClick={() => [copy(info?.steamId2), toolTipChange()]}
+                          onClick={() => [
+                            copy(info?.steamId2),
+                            toolTipChange(),
+                          ]}
                         >
                           <Tooltip title="Copied" placement="right">
                             <ContentCopyIcon className="text-neutral-300" />
@@ -377,7 +389,10 @@ const ShowInfo = ({ id, Componente, theme }) => {
                       ) : tooltipCopy === 1 ? (
                         <div
                           className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
-                          onClick={() => [copy(info?.steamId3), toolTipChange()]}
+                          onClick={() => [
+                            copy(info?.steamId3),
+                            toolTipChange(),
+                          ]}
                         >
                           <Tooltip title="Copied" placement="right">
                             <ContentCopyIcon className="text-neutral-300" />
@@ -558,41 +573,60 @@ const ShowInfo = ({ id, Componente, theme }) => {
               </div>
             </div>
           </div>
-
           <div>
-            <div className="flex flex-col h-48 mb-3 justify-around bg-custom-purple lg:text-lg sm:text-sm shadow-purple-500/50 p-5 shadow-sm rounded-md">
+
+
+            <div className="flex flex-col sm:h- justify-around bg-custom-purple shadow-purple-500/50 p-5 shadow-sm rounded-md">
               <div className="flex items-center justify-center text-neutral-300">
                 <p className="text-xl inter pr-3">Played Hours</p>
                 <AccessTimeIcon />
               </div>
-              {loading ? (
-                <Skeleton
-                  variant="rounded"
-                  width="100%"
-                  height="100%"
-                  animation="wave"
-                  sx={{ bgcolor: "grey.900" }}
-                />
-              ) : (
-                <div className="mt-2 flex flex-col gap-2">
-                  <div className="flex justify-between border rounded-md border-gray-500">
-                    <div className="w-1/2 border-r p-2 border-gray-500">
-                      <p className="text-neutral-300 inter">Total Hours</p>
+              <div className="flex lg:h-56 sm:h-56 mt-2 flex-col gap-2">
+                {loading ? (
+                  <Skeleton
+                    variant="rounded"
+                    width="100%"
+                    height="100%" // Ajuste a altura conforme necessário
+                    animation="wave"
+                    sx={{ bgcolor: "grey.900" }}
+                  />
+                ) : info ? (
+                  <div className="flex flex-col h-full justify-bet-ween gap-4">
+                    <div className="flex justify-between border rounded-md border-gray-500">
+                      <div className="w-1/3 border-r p-2 border-gray-500">
+                        <p className="lg:text-base text-neutral-300 inter">
+                          Hours Played
+                        </p>
+                      </div>
                     </div>
-                    <div className="w-2/3 hover:bg-custom-campos duration-150 flex-1 p-2 border-gray-500">
-                      <span className="text-neutral-300"></span>
+                    <div className="flex justify-between border rounded-md border-gray-500">
+                      <div className="w-1/3 border-r p-2 border-gray-500">
+                        <p className="lg:text-base text-neutral-300 inter">
+                          Game Ban
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between border rounded-md border-gray-500">
+                      <div className="w-1/3 border-r p-2 border-gray-500">
+                        <p className="lg:text-base inter text-neutral-300">
+                          Comm. Ban
+                        </p>
+                      </div>
+                      <div className="w-2/3  hover:bg-custom-campos rounded-md duration-150 flex-1 p-2">
+                      </div>
+                    </div>
+                    <div className="flex justify-between border rounded-md border-gray-500">
+                      <div className="w-1/3 border-r p-2 border-gray-500">
+                        <p className="lg:text-base text-neutral-300 inter">
+                          Trade Ban
+                        </p>
+                      </div>
+                      <div className="w-2/3  hover:bg-custom-campos rounded-md duration-150 flex-1 p-2">
+                      </div>
                     </div>
                   </div>
-                  <div className="flex justify-between border rounded-md border-gray-500">
-                    <div className="w-1/2 border-r p-2 border-gray-500">
-                      <p className="text-neutral-300 inter">Total Hours</p>
-                    </div>
-                    <div className="w-2/3 hover:bg-custom-campos duration-150 flex-1 p-2 border-gray-500">
-                      <span className="text-neutral-300"></span>
-                    </div>
-                  </div>
-                </div>
-              )}
+                ) : null}
+              </div>
             </div>
           </div>
         </div>
