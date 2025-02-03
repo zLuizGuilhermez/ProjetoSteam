@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import searchButton from "../../assets/search-w.png";
 import "../Search/Search.css";
+import axios from "axios";
 
 const Search = ({ saveid, theme, trocarComponente, Componente }) => {
   const [forValidation,setForValidation] = useState("");
@@ -11,14 +12,62 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
     setForValidation(event.target.value);
   };
 
-  //retira o nick do url
+  //verifica se existe um usuario com esse id
+  const verifyInfo = async (idNow) => {
+
+    try{
+
+      const response = await axios.get(
+        `http://localhost:8080/api/infoController/toInfoService/${idNow}`
+      );
+
+      if(response.data !== null){
+        saveid(idNow)
+        trocarComponente("new");
+    
+      }
+
+    }catch(error){
+      console.log("deu erro")
+      if(error.response.status === 500){
+        trocarComponente("error");
+      } 
+    }
+    
+
+
+  }
+
+  //filtra o nome do url
+
   const inputFilter = () => {
     if (forValidation.includes("https://steamcommunity.com/id/")) {
       const extracted = forValidation.split("/id/")[1].split("/")[0]; 
-      saveid(extracted); 
+      foundIdByUrl(extracted); 
     }else if(forValidation.includes("https://steamcommunity.com/profiles/")){
       const extracted = forValidation.split("/profiles/")[1].split("/")[0]; 
-      saveid(extracted);
+      foundIdByUrl(extracted);
+    }
+  };
+
+
+  //verifica se existe alguma pessoa com esse nome de url
+  const foundIdByUrl = async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/infoController/toChangeUrlToId/${id}`
+      );
+      
+      if(response.data.success === 1){
+        saveid(response.data.steamid)
+        trocarComponente("new");
+      }
+
+    } catch (error) {
+      console.log("deu erro")
+      if(error.response.status === 404){
+        trocarComponente("error");
+      } 
     }
   };
 
@@ -37,12 +86,13 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
     
     const result = (steamID32 + STEAM64_BASE).toString(); 
     
-    saveid(result);
+    verifyInfo(result);
     
 
 
   }
 
+  //transforma o id3 para 64
   const id3To64 = () =>{
     const STEAM64_BASE = 76561197960265728n;
 
@@ -55,7 +105,7 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
       // Calcula o Steam64 ID
       const result = (accountID + STEAM64_BASE).toString(); // Converte para String
       
-      saveid(result);
+      verifyInfo(result);
     }else if(forValidation.startsWith("U:")){
       
       const match = forValidation.match(/^U:1:(\d+)$/);
@@ -65,18 +115,17 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
       // Calcula o Steam64 ID
       const result = (accountID + STEAM64_BASE).toString(); // Converte para String
       
-      saveid(result);
+      verifyInfo(result);
     }
 
 
   }
-  
 
-
+  //recebe o id ou url e valida
   const validacao = () =>{
-    if (forValidation && forValidation.length === 17 && !isNaN(id)) {
-      saveid(forValidation);
-    }else if(forValidation && forValidation.length >= 27 && !isNaN(id)){
+    if (forValidation && forValidation.length === 17 && !isNaN(forValidation)) {
+      verifyInfo(forValidation);
+    }else if(forValidation && forValidation.length >= 27 && forValidation.startsWith("https")){
       inputFilter(id)
     }else if(forValidation.startsWith("STEAM_")){
 
@@ -90,24 +139,22 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
 
       id3To64(forValidation);
     
+    }else if (forValidation && forValidation.length < 17) {
+      foundIdByUrl(forValidation);
     }
   }
-
-  const trocarC = () => {
-    trocarComponente("new");
-  };
 
   if (Componente === "old") {
     return (
       <div className="w-full max-w-6xl mx-auto lg:mx-0 flex items-center px-4 sm:px-24 lg:px-0">
-        <div className="border shadow-2xl border-2 border-gray-500 flex flex-col rounded-lg gap-4 h-full w-full relative p-6 sm:p-12 bg-transparent">
+        <div className="border shadow-2xl border-2 border-gray-500 flex flex-col rounded-lg gap-4 h-full w-full relative p-6 sm:p-6 bg-transparent">
           {/* Título */}
-          <div className="flex flex-wrap items-center h-24 w-full">
+          <div className="flex break-words flex-wrap items-center h-24 w-full">
             <p
-              className={`inter cor-${theme} lg:text-8xl max-sm:text-5xl bg-clip-text text-transparent`}
+              className={`inter cor-${theme} lg:text-8xl md:text-6xl sm:text-2xl bg-clip-text text-transparent`}
             >
               Steam
-              <span className="inter lg:text-8xl max-sm:text-5xl font-extrabold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text pl-2 text-transparent">
+              <span className="inter font-extrabold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text pl-2 text-transparent">
                 Infofinder
               </span>
             </p>
@@ -149,9 +196,6 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
                 className="w-16 border border-purple-500 shadow-lg shadow-purple-500/50 hover:bg-purple-500 duration-300 rounded-r-lg flex items-center justify-center bg-transparent"
                 onClick={() => {
                   validacao();
-                  if (forValidation != "") {
-                    trocarC();
-                  }
                 }}
               >
                 <img src={searchButton} alt="Search icon" className="w-6 h-6" />

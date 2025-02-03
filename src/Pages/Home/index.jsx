@@ -10,6 +10,8 @@ import "swiper/css/navigation";
 import modeLight from "../../assets/day.png";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import ErrorPage from "../../Components/ErrorPage/ErrorPage";
+import ErrorPageSearch from "../../Components/ErrorPageSearch/ErrorPageSearch";
 
 const Home = () => {
   const [theme, setTheme] = useState("dark");
@@ -60,30 +62,15 @@ const Home = () => {
           <div className="flex justify-center mt-12 h-auto">
             <ShowInfo id={id} Componente={componente} theme={theme} />
           </div>
-          <div className="flex justify-center">
-            <div className="mt-6 w-2/3 h-64 border-2 border-gray-500 rounded-lg shadow-lg overflow-hidden">
-              <Swiper
-                modules={[Navigation, Pagination]}
-                loop={true}
-                navigation
-                pagination={{ clickable: true }}
-                className="mySwiper h-full"
-              >
-                <SwiperSlide className="flex justify-center h-full items-center">
-                  <img
-                    src={modeLight}
-                    alt="Slide 1"
-                    className="object-cover h-full w-full"
-                  />
-                </SwiperSlide>
-                <SwiperSlide className="flex justify-center items-center  text-white">
-                  Slide 2
-                </SwiperSlide>
-                <SwiperSlide className="flex justify-center items-center  text-white">
-                  Slide 3
-                </SwiperSlide>
-              </Swiper>
-            </div>
+        </div>
+      )}
+
+      {componente === "error" && (
+        <div className="w-full flex justify-center">
+          <div className="flex flex-col items-center border-2 rounded-md border-gray-500 w-2/3 items-center justify-center mt-12 h-auto">
+            <ErrorPage></ErrorPage>
+
+            <ErrorPageSearch theme={theme} saveid={saveid} Componente={componente} trocarComponente={trocarComponente}></ErrorPageSearch>
           </div>
         </div>
       )}

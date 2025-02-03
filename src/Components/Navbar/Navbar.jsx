@@ -7,26 +7,28 @@ import logoWeb from "../../assets/Logo.png";
 const Navbar = ({ theme, setTheme }) => {
   const [menuOpen, setMenuOpen] = useState(false); // Estado para controlar o menu no celular
 
+  // Função para alternar entre os temas
   const ToggleMode = () => {
     theme === "light" ? setTheme("dark") : setTheme("light"); // Verifique no console se o tema está sendo alterado corretamente
   };
 
+  // Função para abrir e fechar o menu no celular
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   return (
-    <div className="w-full sm:w-2/3 flex items-center mt-20 justify-between border border-gray-500 rounded-lg bg-transparent shadow-xl p-4 text-white h-14">
+    <div className="w-full sm:w-2/3 flex items-center mt-20 justify-between border-2 border-gray-500 rounded-lg bg-transparent shadow-xl p-4 text-white h-14">
       <div className="flex items-center space-x-2">
         <a href="index.jsx" className="text-xl font-bold">
           <span className={`cor-${theme} bg-clip-text text-transparent`}>
-            Steam{" "}
+            Steam{""}
           </span>
           <span className="text-purple-500">Infofinder</span>
         </a>
       </div>
 
-      <div className="flex items-center space-x-6 text-lg hidden sm:flex">
+      <div className="flex items-center space-x-6 text-lg hidden md:flex">
         <a
           href="index.jsx"
           className={`corMenu-${theme} font-bold border-b-2 border-white`}
@@ -47,7 +49,7 @@ const Navbar = ({ theme, setTheme }) => {
       </div>
 
       {/* Toggle Menu Icon for Mobile */}
-      <button onClick={toggleMenu} className="sm:hidden text-white">
+      <button onClick={toggleMenu} className="md:hidden text-white">
         <span className="text-2xl">&#9776;</span>
       </button>
 

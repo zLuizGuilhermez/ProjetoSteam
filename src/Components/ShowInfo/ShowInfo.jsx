@@ -21,23 +21,30 @@ const ShowInfo = ({ id, Componente, theme }) => {
   const [tooltipCopy, setToolTipCopy] = useState(0);
   const [hoursPlayed, setHoursPlayed] = useState("");
 
+
+  //função para mudar o estado do tooltip
   const toolTipChange = (status) => {
     tooltipCopy === 0 ? setToolTipCopy(1) : setToolTipCopy(0);
   };
 
+  //função para mudar o estado do tooltip
   const toolTipChangeAwait = () => {
     setTimeout(() => setToolTipCopy(0), 1000);
   };
 
+  //função para mudar o estado do id
   const handleInputChange = (event) => {
     setId(event.target.value);
   };
 
+  //função para copiar o texto
   const copy = (value) => {
     navigator.clipboard.writeText(value);
   };
 
+  //função para buscar informações do usuário
   const fetchInfo = async (id) => {
+    
     try {
       setLoading(true);
       const response = await axios.get(
@@ -52,21 +59,26 @@ const ShowInfo = ({ id, Componente, theme }) => {
         `http://localhost:8080/api/infoController/toGetPlayerLevel/${id}`
       );
 
-      const responseHours = await axios.get(
-        `http://localhost:8080/api/infoController/toGetHoursPlayed/${id}`
-      );
+      let responseHours = { data: null };
 
+      if (response.data.communityvisibilitystate !== "1") {
+        responseHours = await axios.get(
+          `http://localhost:8080/api/infoController/toGetHoursPlayed/${id}`
+        );
+        setHoursPlayed(responseHours.data); 
+      
       setVacStatus(responseVac.data);
       setPlayerlevel(responseLevel.data);
       setInfo(response.data);
-      setHoursPlayed(responseHours.data);
+      
     } catch (error) {
-      console.error("Erro ao buscar informações:", error);
+      trocarComponente("error");
     } finally {
       setLoading(false);
     }
   };
 
+  //busca o id que aquele nome de url esta relacionado
   const foundID = async (id) => {
     try {
       const response = await axios.get(
@@ -81,6 +93,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
     }
   };
 
+  //passivo para chamar a função de buscar informações ou ID
   useEffect(() => {
     if (id && id.length === 17 && Number(id)) {
       console.log("Fetching info for ID:", id);
@@ -574,14 +587,12 @@ const ShowInfo = ({ id, Componente, theme }) => {
             </div>
           </div>
           <div>
-
-
-            <div className="flex flex-col sm:h- justify-around bg-custom-purple shadow-purple-500/50 p-5 shadow-sm rounded-md">
+            <div className="flex flex-col sm:h- justify-between bg-custom-purple shadow-purple-500/50 p-5 shadow-sm rounded-md">
               <div className="flex items-center justify-center text-neutral-300">
                 <p className="text-xl inter pr-3">Played Hours</p>
                 <AccessTimeIcon />
               </div>
-              <div className="flex lg:h-56 sm:h-56 mt-2 flex-col gap-2">
+              <div className="flex lg:h-44 sm:h-44 mt-2 flex-col gap-2">
                 {loading ? (
                   <Skeleton
                     variant="rounded"
@@ -591,37 +602,32 @@ const ShowInfo = ({ id, Componente, theme }) => {
                     sx={{ bgcolor: "grey.900" }}
                   />
                 ) : info ? (
-                  <div className="flex flex-col h-full justify-bet-ween gap-4">
+                  <div className="flex flex-col h-full justify-between gap-2">
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
                         <p className="lg:text-base text-neutral-300 inter">
-                          Hours Played
+                          Total Hours
                         </p>
                       </div>
-                    </div>
-                    <div className="flex justify-between border rounded-md border-gray-500">
-                      <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="lg:text-base text-neutral-300 inter">
-                          Game Ban
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex justify-between border rounded-md border-gray-500">
-                      <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="lg:text-base inter text-neutral-300">
-                          Comm. Ban
-                        </p>
-                      </div>
-                      <div className="w-2/3  hover:bg-custom-campos rounded-md duration-150 flex-1 p-2">
-                      </div>
-                    </div>
-                    <div className="flex justify-between border rounded-md border-gray-500">
-                      <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="lg:text-base text-neutral-300 inter">
-                          Trade Ban
-                        </p>
-                      </div>
-                      <div className="w-2/3  hover:bg-custom-campos rounded-md duration-150 flex-1 p-2">
+
+                      <div className="w-2/3 hover:bg-custom-campos rounded-r-md duration-150 flex-1 p-2">
+                        <div className="flex justify-between">
+                          <span className="lg:text-base text-neutral-300 inter ">
+                            {hoursPlayed.totalHours} hours
+                          </span>
+                          <Tooltip
+                            title={
+                              <span>
+                                Paied games: <span className="text-purple-400">{hoursPlayed.paiedHoursPlayed}</span> hours
+                                <br />
+                                Free games: <span className="text-purple-400">{hoursPlayed.freeHoursPlayed}</span> hours
+                              </span>
+                            }
+                            placement="right"
+                          >
+                            <AccessTimeIcon className="text-neutral-300" />
+                          </Tooltip>
+                        </div>
                       </div>
                     </div>
                   </div>
