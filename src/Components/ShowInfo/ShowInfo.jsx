@@ -14,13 +14,12 @@ import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined";
 
 const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
   const [info, setInfo] = useState({});
-  const [forValidation,setForValidation] = useState("");
+  const [forValidation, setForValidation] = useState("");
   const [loading, setLoading] = useState(false);
   const [vacStatus, setVacStatus] = useState("");
   const [PlayerLevel, setPlayerlevel] = useState("");
   const [tooltipCopy, setToolTipCopy] = useState(0);
   const [hoursPlayed, setHoursPlayed] = useState("");
-
 
   //função para mudar o estado do tooltip
   const toolTipChange = (status) => {
@@ -44,34 +43,32 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
 
   //função para buscar informações do usuário
   const fetchInfo = async (id) => {
-
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:8080/api/infoController/toInfoService/${id}`
+        `https://backendsteamproject-production.up.railway.app/api/infoController/toInfoService/${id}`
       );
 
       const responseVac = await axios.get(
-        `http://localhost:8080/api/infoController/toGetBanList/${id}`
+        `https://backendsteamproject-production.up.railway.app/api/infoController/toGetBanList/${id}`
       );
 
       const responseLevel = await axios.get(
-        `http://localhost:8080/api/infoController/toGetPlayerLevel/${id}`
+        `https://backendsteamproject-production.up.railway.app/api/infoController/toGetPlayerLevel/${id}`
       );
 
       let responseHours = { data: null };
 
       if (response.data.communityvisibilitystate !== "1") {
         responseHours = await axios.get(
-          `http://localhost:8080/api/infoController/toGetHoursPlayed/${id}`
+          `https://backendsteamproject-production.up.railway.app/api/infoController/toGetHoursPlayed/${id}`
         );
-        setHoursPlayed(responseHours.data); 
+        setHoursPlayed(responseHours.data);
       }
-      
+
       setVacStatus(responseVac.data);
       setPlayerlevel(responseLevel.data);
       setInfo(response.data);
-      
     } catch (error) {
       console.error("Erro ao buscar informações:", error);
     } finally {
@@ -106,44 +103,35 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
     }
   }, [id]);
 
-
   const verifyInfo = async (idNow) => {
-
-    try{
-
+    try {
       const response = await axios.get(
         `http://localhost:8080/api/infoController/toInfoService/${idNow}`
       );
 
-      if(response.data !== null){
-        fetchInfo(idNow)
+      if (response.data !== null) {
+        fetchInfo(idNow);
         trocarComponente("new");
-    
       }
-
-    }catch(error){
-      console.log("deu erro")
-      if(error.response.status === 500){
+    } catch (error) {
+      console.log("deu erro");
+      if (error.response.status === 500) {
         trocarComponente("error");
-      } 
+      }
     }
-    
-
-
-  }
+  };
 
   //filtra o nome do url
 
   const inputFilter = () => {
     if (forValidation.includes("https://steamcommunity.com/id/")) {
-      const extracted = forValidation.split("/id/")[1].split("/")[0]; 
-      foundIdByUrl(extracted); 
-    }else if(forValidation.includes("https://steamcommunity.com/profiles/")){
-      const extracted = forValidation.split("/profiles/")[1].split("/")[0]; 
+      const extracted = forValidation.split("/id/")[1].split("/")[0];
+      foundIdByUrl(extracted);
+    } else if (forValidation.includes("https://steamcommunity.com/profiles/")) {
+      const extracted = forValidation.split("/profiles/")[1].split("/")[0];
       foundIdByUrl(extracted);
     }
   };
-
 
   //verifica se existe alguma pessoa com esse nome de url
   const foundIdByUrl = async (id) => {
@@ -151,92 +139,81 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
       const response = await axios.get(
         `http://localhost:8080/api/infoController/toChangeUrlToId/${id}`
       );
-      
-      if(response.data.success === 1){
+
+      if (response.data.success === 1) {
         fetchInfo(response.data.steamid);
         trocarComponente("new");
       }
-
     } catch (error) {
-      console.log("deu erro")
-      if(error.response.status === 404){
+      console.log("deu erro");
+      if (error.response.status === 404) {
         trocarComponente("error");
-      } 
+      }
     }
   };
 
-   // transforma o id2 para 64
-  const id2To64 = () =>{
-    
-    const STEAM64_BASE = 76561197960265728n; 
+  // transforma o id2 para 64
+  const id2To64 = () => {
+    const STEAM64_BASE = 76561197960265728n;
 
     const match = forValidation.match(/^STEAM_\d:(\d):(\d+)$/);
     if (!match) throw new Error("Formato inválido de Steam2ID");
-    
-    const Y = BigInt(parseInt(match[1], 10)); 
-    const accountID = BigInt(parseInt(match[2], 10)); 
-    
-    const steamID32 = (accountID * 2n) + Y; 
-    
-    const result = (steamID32 + STEAM64_BASE).toString(); 
-    
+
+    const Y = BigInt(parseInt(match[1], 10));
+    const accountID = BigInt(parseInt(match[2], 10));
+
+    const steamID32 = accountID * 2n + Y;
+
+    const result = (steamID32 + STEAM64_BASE).toString();
+
     fetchInfo(result);
-    
-
-
-  }
+  };
 
   //transforma o id3 para 64
-  const id3To64 = () =>{
+  const id3To64 = () => {
     const STEAM64_BASE = 76561197960265728n;
 
-    if(forValidation.startsWith("[U:")){
-
+    if (forValidation.startsWith("[U:")) {
       const match = forValidation.match(/^\[U:1:(\d+)\]$/);
-      
+
       const accountID = BigInt(match[1]); // Extrai o AccountID como BigInt
-  
+
       // Calcula o Steam64 ID
       const result = (accountID + STEAM64_BASE).toString(); // Converte para String
-      
+
       verifyInfo(result);
-    }else if(forValidation.startsWith("U:")){
-      
+    } else if (forValidation.startsWith("U:")) {
       const match = forValidation.match(/^U:1:(\d+)$/);
-      
+
       const accountID = BigInt(match[1]); // Extrai o AccountID como BigInt
-  
+
       // Calcula o Steam64 ID
       const result = (accountID + STEAM64_BASE).toString(); // Converte para String
-      
+
       fetchInfo(result);
     }
-
-
-  }
+  };
 
   //recebe o id ou url e valida
-  const validacao = () =>{
+  const validacao = () => {
     if (forValidation && forValidation.length === 17 && !isNaN(forValidation)) {
       verifyInfo(forValidation);
-    }else if(forValidation && forValidation.length >= 27 && forValidation.startsWith("https")){
-      inputFilter(id)
-    }else if(forValidation.startsWith("STEAM_")){
-
+    } else if (
+      forValidation &&
+      forValidation.length >= 27 &&
+      forValidation.startsWith("https")
+    ) {
+      inputFilter(id);
+    } else if (forValidation.startsWith("STEAM_")) {
       id2To64(forValidation);
-
-    }else if(forValidation.startsWith("[U:")){
-      
+    } else if (forValidation.startsWith("[U:")) {
       id3To64(forValidation);
-      
-    }else if(forValidation.startsWith("U:")){
-
+    } else if (forValidation.startsWith("U:")) {
       id3To64(forValidation);
-    
-    }else if (forValidation && forValidation.length < 17) {
+    } else if (forValidation && forValidation.length < 17) {
       foundIdByUrl(forValidation);
     }
-  }
+  };
 
   if (Componente === "new") {
     return (
@@ -303,18 +280,28 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                         {info.personaname}
                       </p>
                     )}
-                    <div className="flex">
-                      <div className="ml-48  ">
-                        <p className=" text-base font-semibold text-neutral-300">
-                          Level
-                        </p>
-                      </div>
-                      <div className=" ml-2 items-center rounded-xl w-6 flex justify-center border ">
-                        <div className="text-neutral-300 text-xs ">
-                          {PlayerLevel.player_level}
+                    {info.communityvisibilitystate === "3" ? (
+                      <div className="flex">
+                        <div className="ml-48  ">
+                          <p className=" text-base font-semibold text-neutral-300">
+                            Level
+                          </p>
+                        </div>
+                        <div className=" ml-2 items-center rounded-xl w-6 flex justify-center border ">
+                          <div className="text-neutral-300 text-xs ">
+                            {PlayerLevel.player_level}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    ) : info.communityvisibilitystate === "1" ? (
+                      <div className="flex">
+                        <div className="ml-48  ">
+                          <p className=" text-base font-semibold text-red-700">
+                            Private Profile
+                          </p>
+                          </div>
+                      </div>
+                    ) : null}
                     <div className="ml-48 mt-1 h-6 w-6">
                       <img
                         className=" border-2 border-gray-500 h-full w- rounded-xl"
@@ -751,9 +738,17 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                           <Tooltip
                             title={
                               <span>
-                                Paied games: <span className="text-purple-400">{hoursPlayed.paiedHoursPlayed}</span> hours
+                                Paied games:{" "}
+                                <span className="text-purple-400">
+                                  {hoursPlayed.paiedHoursPlayed}
+                                </span>{" "}
+                                hours
                                 <br />
-                                Free games: <span className="text-purple-400">{hoursPlayed.freeHoursPlayed}</span> hours
+                                Free games:{" "}
+                                <span className="text-purple-400">
+                                  {hoursPlayed.freeHoursPlayed}
+                                </span>{" "}
+                                hours
                               </span>
                             }
                             placement="right"
