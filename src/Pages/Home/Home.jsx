@@ -1,5 +1,5 @@
 import "./Style.css";
-import Navbar from "../../Components/Navbar/navbar";
+import Navbar from "../Home/Navbar/Navbar";
 import { useState, useEffect } from "react";
 import Search from "../../Components/Search/Search";
 import ShowInfo from "../../Components/ShowInfo/ShowInfo";
