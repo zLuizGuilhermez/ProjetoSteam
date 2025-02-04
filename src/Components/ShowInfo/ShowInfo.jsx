@@ -12,9 +12,9 @@ import GppMaybeOutlinedIcon from "@mui/icons-material/GppMaybeOutlined";
 import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
 import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined";
 
-const ShowInfo = ({ id, Componente, theme }) => {
+const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
   const [info, setInfo] = useState({});
-  const [idNew, setId] = useState("");
+  const [forValidation,setForValidation] = useState("");
   const [loading, setLoading] = useState(false);
   const [vacStatus, setVacStatus] = useState("");
   const [PlayerLevel, setPlayerlevel] = useState("");
@@ -34,7 +34,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
 
   //função para mudar o estado do id
   const handleInputChange = (event) => {
-    setId(event.target.value);
+    setForValidation(event.target.value);
   };
 
   //função para copiar o texto
@@ -44,7 +44,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
 
   //função para buscar informações do usuário
   const fetchInfo = async (id) => {
-    
+
     try {
       setLoading(true);
       const response = await axios.get(
@@ -66,13 +66,14 @@ const ShowInfo = ({ id, Componente, theme }) => {
           `http://localhost:8080/api/infoController/toGetHoursPlayed/${id}`
         );
         setHoursPlayed(responseHours.data); 
+      }
       
       setVacStatus(responseVac.data);
       setPlayerlevel(responseLevel.data);
       setInfo(response.data);
       
     } catch (error) {
-      trocarComponente("error");
+      console.error("Erro ao buscar informações:", error);
     } finally {
       setLoading(false);
     }
@@ -105,6 +106,138 @@ const ShowInfo = ({ id, Componente, theme }) => {
     }
   }, [id]);
 
+
+  const verifyInfo = async (idNow) => {
+
+    try{
+
+      const response = await axios.get(
+        `http://localhost:8080/api/infoController/toInfoService/${idNow}`
+      );
+
+      if(response.data !== null){
+        fetchInfo(idNow)
+        trocarComponente("new");
+    
+      }
+
+    }catch(error){
+      console.log("deu erro")
+      if(error.response.status === 500){
+        trocarComponente("error");
+      } 
+    }
+    
+
+
+  }
+
+  //filtra o nome do url
+
+  const inputFilter = () => {
+    if (forValidation.includes("https://steamcommunity.com/id/")) {
+      const extracted = forValidation.split("/id/")[1].split("/")[0]; 
+      foundIdByUrl(extracted); 
+    }else if(forValidation.includes("https://steamcommunity.com/profiles/")){
+      const extracted = forValidation.split("/profiles/")[1].split("/")[0]; 
+      foundIdByUrl(extracted);
+    }
+  };
+
+
+  //verifica se existe alguma pessoa com esse nome de url
+  const foundIdByUrl = async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/infoController/toChangeUrlToId/${id}`
+      );
+      
+      if(response.data.success === 1){
+        fetchInfo(response.data.steamid);
+        trocarComponente("new");
+      }
+
+    } catch (error) {
+      console.log("deu erro")
+      if(error.response.status === 404){
+        trocarComponente("error");
+      } 
+    }
+  };
+
+   // transforma o id2 para 64
+  const id2To64 = () =>{
+    
+    const STEAM64_BASE = 76561197960265728n; 
+
+    const match = forValidation.match(/^STEAM_\d:(\d):(\d+)$/);
+    if (!match) throw new Error("Formato inválido de Steam2ID");
+    
+    const Y = BigInt(parseInt(match[1], 10)); 
+    const accountID = BigInt(parseInt(match[2], 10)); 
+    
+    const steamID32 = (accountID * 2n) + Y; 
+    
+    const result = (steamID32 + STEAM64_BASE).toString(); 
+    
+    fetchInfo(result);
+    
+
+
+  }
+
+  //transforma o id3 para 64
+  const id3To64 = () =>{
+    const STEAM64_BASE = 76561197960265728n;
+
+    if(forValidation.startsWith("[U:")){
+
+      const match = forValidation.match(/^\[U:1:(\d+)\]$/);
+      
+      const accountID = BigInt(match[1]); // Extrai o AccountID como BigInt
+  
+      // Calcula o Steam64 ID
+      const result = (accountID + STEAM64_BASE).toString(); // Converte para String
+      
+      verifyInfo(result);
+    }else if(forValidation.startsWith("U:")){
+      
+      const match = forValidation.match(/^U:1:(\d+)$/);
+      
+      const accountID = BigInt(match[1]); // Extrai o AccountID como BigInt
+  
+      // Calcula o Steam64 ID
+      const result = (accountID + STEAM64_BASE).toString(); // Converte para String
+      
+      fetchInfo(result);
+    }
+
+
+  }
+
+  //recebe o id ou url e valida
+  const validacao = () =>{
+    if (forValidation && forValidation.length === 17 && !isNaN(forValidation)) {
+      verifyInfo(forValidation);
+    }else if(forValidation && forValidation.length >= 27 && forValidation.startsWith("https")){
+      inputFilter(id)
+    }else if(forValidation.startsWith("STEAM_")){
+
+      id2To64(forValidation);
+
+    }else if(forValidation.startsWith("[U:")){
+      
+      id3To64(forValidation);
+      
+    }else if(forValidation.startsWith("U:")){
+
+      id3To64(forValidation);
+    
+    }else if (forValidation && forValidation.length < 17) {
+      foundIdByUrl(forValidation);
+    }
+  }
+
   if (Componente === "new") {
     return (
       <div className="border shadow-2xl  lg:w-2/3 sm:w-3/4 h-full border-2 border-gray-500 flex flex-col rounded-lg gap-4 md:p-4 g:p-6 sm:p-3 bg-transparent content-around mb-9">
@@ -127,7 +260,7 @@ const ShowInfo = ({ id, Componente, theme }) => {
                     },
                   }}
                   onClick={() => {
-                    if (idNew) fetchInfo(idNew);
+                    validacao();
                   }}
                 >
                   <img

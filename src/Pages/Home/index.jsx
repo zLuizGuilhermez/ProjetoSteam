@@ -12,6 +12,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import ErrorPage from "../../Components/ErrorPage/ErrorPage";
 import ErrorPageSearch from "../../Components/ErrorPageSearch/ErrorPageSearch";
+import Carousel from "../../Components/Carousel/Carousel";
 
 const Home = () => {
   const [theme, setTheme] = useState("dark");
@@ -59,8 +60,11 @@ const Home = () => {
 
       {componente === "new" && (
         <div className="w-full">
-          <div className="flex justify-center mt-12 h-auto">
-            <ShowInfo id={id} Componente={componente} theme={theme} />
+          <div className="flex flex-col items-center mt-12 h-auto">
+            <ShowInfo id={id} trocarComponente={trocarComponente} Componente={componente} theme={theme} />
+
+            <Carousel></Carousel>    
+
           </div>
         </div>
       )}
