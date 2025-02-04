@@ -5,7 +5,7 @@ import Search from "../../Components/Search/Search";
 import ShowInfo from "../../Components/ShowInfo/ShowInfo";
 import ErrorPage from "../../Components/ErrorPage/ErrorPage";
 import ErrorPageSearch from "../../Components/ErrorPageSearch/ErrorPageSearch";
-import Carousel from "../../Components/Carousel/Carousel";
+// import Carousel from "../../Components/Carousel/Carousel";
 
 const Home = () => {
   const [theme, setTheme] = useState("dark");
@@ -56,7 +56,7 @@ const Home = () => {
           <div className="flex flex-col items-center mt-12 h-auto">
             <ShowInfo id={id} trocarComponente={trocarComponente} Componente={componente} theme={theme} />
 
-            <Carousel></Carousel>    
+            {/* <Carousel></Carousel>     */}
 
           </div>
         </div>
