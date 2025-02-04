@@ -5,6 +5,7 @@ import Search from "../../Components/Search/Search";
 import ShowInfo from "../../Components/ShowInfo/ShowInfo";
 import ErrorPage from "../../Components/ErrorPage/ErrorPage";
 import ErrorPageSearch from "../../Components/ErrorPageSearch/ErrorPageSearch";
+import { Analytics } from "@vercel/analytics/react"
 // import Carousel from "../../Components/Carousel/Carousel";
 
 const Home = () => {
@@ -33,6 +34,7 @@ const Home = () => {
 
   return (
     <div className="h-full w-full">
+      <Analytics />
       <div className="absolute h-4/6 w-2/4 rounded-full blur-3xl opacity-10 -top-80 -left-96 bg-purple-700">
         <p className="">a</p>
       </div>

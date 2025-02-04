@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import searchButton from "../../assets/search-w.png";
 import "../Search/Search.css";
 import axios from "axios";
+import SearchIcon from '@mui/icons-material/Search';
 
 const Search = ({ saveid, theme, trocarComponente, Componente }) => {
   const [forValidation,setForValidation] = useState("");
@@ -198,7 +199,7 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
                   validacao();
                 }}
               >
-                <img src={searchButton} alt="Search icon" className="w-6 h-6" />
+                <SearchIcon src={searchButton} alt="Search icon" className={`buttomColor-${theme}`} />
               </button>
             </div>
           </div>
