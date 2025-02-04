@@ -127,7 +127,7 @@ const ErrorPageSearch = ({theme, saveid, trocarComponente}) =>{
     const validacao = () =>{
       if (forValidation && forValidation.length === 17 && !isNaN(forValidation)) {
         verifyInfo(forValidation);
-      }else if(forValidation && forValidation.length >= 27 && !isNaN(forValidation)){
+      }else if(forValidation && forValidation.length >= 27 && forValidation.startsWith("https://steamcommunity.com/")){;
         inputFilter(id)
       }else if(forValidation.startsWith("STEAM_")){
   
