@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import ApiOutlinedIcon from "@mui/icons-material/ApiOutlined";
 import GppMaybeOutlinedIcon from "@mui/icons-material/GppMaybeOutlined";
 import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
-import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined";
+import SearchIcon from '@mui/icons-material/Search';
 
 const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
   const [info, setInfo] = useState({});
@@ -219,7 +219,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
     return (
       <div className="border shadow-2xl  lg:w-2/3 sm:w-3/4 h-full border-2 border-gray-500 flex flex-col rounded-lg gap-4 md:p-4 g:p-6 sm:p-3 bg-transparent content-around mb-9">
         <div className="flex justify-center items-center h-14">
-          <div className="shadow-2xl w-1/2 h-14 flex justify-center items-center">
+          <div className=" dark:bg-custom-black duration-300 bg-slate-200 w-1/2 h-14 flex justify-center items-center">
             <div className="border-2 w-full flex border-purple-500 rounded-md">
               <input
                 onChange={handleInputChange}
@@ -240,10 +240,11 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                     validacao();
                   }}
                 >
-                  <img
+                  <SearchIcon
                     src={searchButton}
                     alt="Search icon"
-                    className="w-6 h-6"
+                    id={`searchButton-${theme}`}
+                    className={`w-6 h-6`}
                   />
                 </Button>
               </Tooltip>
@@ -360,7 +361,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
 
         <div className="gap-6 mt-24 grid lg:grid-cols-2 lg:text-lg md:text-sm sm:text-xs sm:grid-cols-1">
           <div className="">
-            <div className="flex flex-col justify-around bg-custom-purple shadow-purple-500/50 p-5 shadow-sm rounded-md">
+            <div className="flex flex-col justify-around bg-gray-400 dark:bg-custom-purple shadow-purple-500/50 p-5 shadow-sm rounded-md">
               <div className="flex items-center justify-center text-neutral-300">
                 <p className="inter text-xl pr-3">Steam IDs</p>
                 <ApiOutlinedIcon />
@@ -382,7 +383,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                           Steam ID
                         </p>
                       </div>
-                      <div className="w-2/3 hover:bg-custom-campos duration-150 flex-1 p-2 border-r border-gray-500">
+                      <div className="w-2/3 dark:hover:bg-custom-campos hover:bg-gray-500 duration-150 flex-1 p-2 border-r border-gray-500">
                         <span className="inter lg:text-base text-neutral-300">
                           {info?.steamid}
                         </span>
