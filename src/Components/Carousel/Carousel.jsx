@@ -16,7 +16,7 @@ const Carousel = () => {
 
   return (
     <div className="flex flex-col w-2/3 text-4xl mt-9 mb-9 gap-9 items-center justify-center h-96">
-        <div >
+        <div>
             <p className='text-white inter '> Most games played in the last 2 weeks</p>
         </div>
       <div className="flex relative w-3/4 h-full justify-center">
