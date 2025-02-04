@@ -739,7 +739,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                           <Tooltip
                             title={
                               <span>
-                                Paied games:{" "}
+                                Paid games:{" "}
                                 <span className="text-purple-400">
                                   {hoursPlayed.paiedHoursPlayed}
                                 </span>{" "}
