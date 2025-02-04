@@ -30,13 +30,10 @@ const Navbar = ({ theme, setTheme }) => {
 
       <div className="flex items-center space-x-6 text-lg hidden md:flex">
         <a
-          href="Home"
+          href="/Home.jsx"
           className={`corMenu-${theme} font-bold border-b-2 border-white`}
         >
           Home
-        </a>
-        <a href="#" className={`corMenu-${theme} hover:text-white transition`}>
-          Sobre nós
         </a>
 
         <button onClick={ToggleMode} className="bg-purple-500 p-2 rounded-lg">
