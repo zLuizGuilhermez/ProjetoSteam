@@ -17,11 +17,17 @@
 }
 
 .cor-dark{
-    background-image: linear-gradient(to right, white, #b5b6b8);
+    background-image: linear-gradient(to right, white, #000000);
 }
 
 .corTexto-light{
-    color: black;
+    color: rgb(0, 0, 0);
+}
+
+.corTexto-dark {
+  background-image: linear-gradient(to right, white, #d1d5db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .corInput-light {

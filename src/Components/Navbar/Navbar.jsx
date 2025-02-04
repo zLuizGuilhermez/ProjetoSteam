@@ -20,8 +20,8 @@ const Navbar = ({ theme, setTheme }) => {
   return (
     <div className="w-full sm:w-2/3 flex items-center mt-20 justify-between border-2 border-gray-500 rounded-lg bg-transparent shadow-xl p-4 text-white h-14">
       <div className="flex items-center space-x-2">
-        <a href="index.jsx" className="text-xl font-bold">
-          <span className={`cor-${theme} bg-clip-text text-transparent`}>
+        <a href="" className="text-xl font-bold">
+          <span className={`corLogo-${theme} bg-clip-text text-transparent`}>
             Steam{""}
           </span>
           <span className="text-purple-500">Infofinder</span>
@@ -31,7 +31,8 @@ const Navbar = ({ theme, setTheme }) => {
       <div className="flex items-center space-x-6 text-lg hidden md:flex">
         <a
           href=""
-          className={`corMenu-${theme} font-bold border-b-2 border-white`}
+          className={`corMenu-${theme} font-bold duration-300 border-b-2 border-black dark:border-white hover:border-purple-500`}
+          
         >
           Home
         </a>
