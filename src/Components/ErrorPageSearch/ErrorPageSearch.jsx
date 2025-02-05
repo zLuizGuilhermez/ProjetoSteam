@@ -20,7 +20,7 @@ const ErrorPageSearch = ({theme, saveid, trocarComponente}) =>{
       try{
   
         const response = await axios.get(
-          `http://localhost:8080/api/infoController/toInfoService/${idNow}`
+          `https://backendsteamproject-production.up.railway.app/api/infoController/toInfoService/${idNow}`
         );
   
         if(response.data !== null){

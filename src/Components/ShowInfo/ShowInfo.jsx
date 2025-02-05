@@ -46,22 +46,22 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `backendsteamproject-production.up.railway.app/api/infoController/toInfoService/${id}`
+        `https://backendsteamproject-production.up.railway.app/api/infoController/toInfoService/${id}`
       );
 
       const responseVac = await axios.get(
-        `backendsteamproject-production.up.railway.app/api/infoController/toGetBanList/${id}`
+        `https://backendsteamproject-production.up.railway.app/api/infoController/toGetBanList/${id}`
       );
 
       const responseLevel = await axios.get(
-        `backendsteamproject-production.up.railway.app/api/infoController/toGetPlayerLevel/${id}`
+        `https://backendsteamproject-production.up.railway.app/api/infoController/toGetPlayerLevel/${id}`
       );
 
       let responseHours = { data: null };
 
       if (response.data.communityvisibilitystate !== "1") {
         responseHours = await axios.get(
-          `backendsteamproject-production.up.railway.app/api/infoController/toGetHoursPlayed/${id}`
+          `https://backendsteamproject-production.up.railway.app/api/infoController/toGetHoursPlayed/${id}`
         );
         setHoursPlayed(responseHours.data);
       }
@@ -80,7 +80,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
   const foundID = async (id) => {
     try {
       const response = await axios.get(
-        `backendsteamproject-production.up.railway.app/api/infoController/toChangeUrlToId/${id}`
+        `https://backendsteamproject-production.up.railway.app/api/infoController/toChangeUrlToId/${id}`
       );
 
       const steamID = response.data.steamid.replace(/'/g, "");
@@ -106,7 +106,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
   const verifyInfo = async (idNow) => {
     try {
       const response = await axios.get(
-        `backendsteamproject-production.up.railway.app/api/infoController/toInfoService/${idNow}`
+        `https://backendsteamproject-production.up.railway.app/api/infoController/toInfoService/${idNow}`
       );
 
       if (response.data !== null) {
@@ -137,7 +137,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
   const foundIdByUrl = async (id) => {
     try {
       const response = await axios.get(
-        `backendsteamproject-production.up.railway.app/api/infoController/toChangeUrlToId/${id}`
+        `https://backendsteamproject-production.up.railway.app/api/infoController/toChangeUrlToId/${id}`
       );
 
       if (response.data.success === 1) {
