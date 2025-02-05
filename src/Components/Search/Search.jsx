@@ -19,7 +19,7 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
     try{
 
       const response = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toInfoService/${idNow}`
+        `http://localhost:8080/api/infoController/toInfoService/${idNow}`
       );
 
       if(response.data !== null){
@@ -56,7 +56,7 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
   const foundIdByUrl = async (id) => {
     try {
       const response = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toChangeUrlToId/${id}`
+        `http://localhost:8080/api/infoController/toChangeUrlToId/${id}`
       );
       
       if(response.data.success === 1){
@@ -164,7 +164,7 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
           {/* Texto de boas-vindas */}
           <div className="lg:w-2/3 sm:w-full">
             <p
-              className={`inter corTexto-${theme} text-lg sm:text-2xl bg-clip-text text-transparent break-words`}
+              className={`inter corTexto-${theme} text-wrap text-lg sm:text-2xl bg-clip-text text-transparent break-words`}
             >
               Welcome to{" "}
               <span className="text-purple-400 duration-300">Steam Infofinder</span>, a
