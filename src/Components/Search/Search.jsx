@@ -186,15 +186,15 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
 
           {/* Barra de pesquisa */}
           <div className="pt-32">
-            <div className="mt-4 shadow-2xl w-full  lg:w-2/3 md:w-2/3 sm:w-full h-14 flex">
+            <div className="mt-4 shadow-2xl w-full border-2 rounded-lg border-purple-500  lg:w-2/3 md:w-2/3 sm:w-full h-14 flex">
               <input
                 onChange={change}
                 type="text"
                 placeholder="Enter with steam url, steam64 ID, steam3 ID, steam2 ID..."
-                className={`w-full corInput-${theme} pl-4 border border-purple-500 rounded-l-lg focus:ring-0 focus:outline-none bg-transparent text-white placeholder-gray-400 text-xs sm:text-sm`}
+                className={`w-full corInput-${theme} pl-4 rounded-l-lg focus:ring-0 focus:outline-none bg-transparent text-white placeholder-gray-400 text-xs sm:text-sm`}
               />
               <button
-                className="w-16 border border-purple-500 shadow-lg shadow-purple-500/50 hover:bg-purple-500 duration-300 rounded-r-lg flex items-center justify-center bg-transparent"
+                className="w-16 shadow-lg shadow-purple-500/50 hover:bg-purple-500 duration-300 flex items-center justify-center bg-transparent"
                 onClick={() => {
                   validacao();
                 }}
