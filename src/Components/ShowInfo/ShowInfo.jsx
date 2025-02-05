@@ -609,7 +609,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                           </div>
                         </div>
                       ) : (
-                        <div className="w-2/3  hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 flex-1 p-2">
+                        <div className="w-2/3 dark:rounded-md hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 flex-1 p-2">
                           <div className="flex justify-between">
                             <span className="lg:text-base inter text-dark dark:text-neutral-300">
                               Good Situation
@@ -619,14 +619,14 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                         </div>
                       )}
                     </div>
-                    <div className="flex justify-between border  border-gray-500">
+                    <div className="flex justify-between border rounded-md  border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
                         <p className="lg:text-base text-dark dark:text-neutral-300 inter">
                           Game Ban
                         </p>
                       </div>
                       {vacStatus.NumberOfGameBans === 0 ? (
-                        <div className="w-2/3 hover:bg-gray-400 dark:hover:bg-custom-campos  duration-150 flex-1 p-2">
+                        <div className="w-2/3 dark:rounded-md hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 flex-1 p-2">
                           <div className="flex justify-between">
                             <span className="lg:text-base inter text-dark dark:text-neutral-300">
                               Good Situation
@@ -654,13 +654,13 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                         </div>
                       ) : null}
                     </div>
-                    <div className="flex justify-between border  border-gray-500">
+                    <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
                         <p className="lg:text-base inter text-dark dark:text-neutral-300">
                           Comm. Ban
                         </p>
                       </div>
-                      <div className="w-2/3  hover:bg-gray-400 dark:hover:bg-custom-campos  duration-150 flex-1 p-2">
+                      <div className="w-2/3 dark:rounded-md  hover:bg-gray-400 dark:hover:bg-custom-campos  duration-150 flex-1 p-2">
                         {vacStatus.CommunityBanned == false ? (
                           <div className="flex justify-between">
                             <span className="lg:text-base inter text-dark dark:text-neutral-300">
@@ -678,13 +678,13 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                         )}
                       </div>
                     </div>
-                    <div className="flex justify-between border  border-gray-500">
+                    <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
                         <p className="lg:text-base text-dark dark:text-neutral-300 inter">
                           Trade Ban
                         </p>
                       </div>
-                      <div className="w-2/3  hover:bg-gray-400 dark:hover:bg-custom-campos  duration-150 flex-1 p-2">
+                      <div className="w-2/3  hover:bg-gray-400 dark:hover:bg-custom-campos dark:rounded-md duration-150 flex-1 p-2">
                         {vacStatus.EconomyBan == "none" ? (
                           <div className="flex justify-between">
                             <span className="lg:text-base inter text-dark dark:text-neutral-300">
