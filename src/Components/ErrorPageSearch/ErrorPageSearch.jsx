@@ -57,7 +57,7 @@ const ErrorPageSearch = ({theme, saveid, trocarComponente}) =>{
     const foundIdByUrl = async (id) => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/infoController/toChangeUrlToId/${id}`
+          `backendsteamproject-production.up.railway.app/api/infoController/toChangeUrlToId/${id}`
         );
         
         if(response.data.success === 1){
