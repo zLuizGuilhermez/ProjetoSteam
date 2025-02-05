@@ -46,22 +46,22 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toInfoService/${id}`
+        `http://localhost:8080/api/infoController/toInfoService/${id}`
       );
 
       const responseVac = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toGetBanList/${id}`
+        `http://localhost:8080/api/infoController/toGetBanList/${id}`
       );
 
       const responseLevel = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toGetPlayerLevel/${id}`
+        `http://localhost:8080/api/infoController/toGetPlayerLevel/${id}`
       );
 
       let responseHours = { data: null };
 
       if (response.data.communityvisibilitystate !== "1") {
         responseHours = await axios.get(
-          `https://backendsteamproject-production.up.railway.app/api/infoController/toGetHoursPlayed/${id}`
+          `http://localhost:8080/api/infoController/toGetHoursPlayed/${id}`
         );
         setHoursPlayed(responseHours.data);
       }
@@ -80,7 +80,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
   const foundID = async (id) => {
     try {
       const response = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toChangeUrlToId/${id}`
+        `http://localhost:8080/api/infoController/toChangeUrlToId/${id}`
       );
 
       const steamID = response.data.steamid.replace(/'/g, "");
@@ -106,7 +106,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
   const verifyInfo = async (idNow) => {
     try {
       const response = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toInfoService/${idNow}`
+        `http://localhost:8080/api/infoController/toInfoService/${idNow}`
       );
 
       if (response.data !== null) {
@@ -137,7 +137,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
   const foundIdByUrl = async (id) => {
     try {
       const response = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toChangeUrlToId/${id}`
+        `http://localhost:8080/api/infoController/toChangeUrlToId/${id}`
       );
 
       if (response.data.success === 1) {
@@ -225,7 +225,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                 onChange={handleInputChange}
                 type="text"
                 placeholder="Enter with steam url, steam64 ID, steam3 ID, steam2 ID..."
-                className={`w-full corInput-${theme} pl-4 h-9 rounded-l-lg focus:ring-0 focus:outline-none text-neutral-300 bg-transparent s placeholder-gray-400 text-xs sm:text-sm`}
+                className={`w-full corInput-${theme} pl-4 h-9 rounded-l-lg focus:ring-0 focus:outline-none text-dark dark:text-neutral-300 bg-transparent s placeholder-gray-400 text-xs sm:text-sm`}
               />
               <Tooltip title="Search" placement="right-start">
                 <Button
@@ -277,19 +277,19 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                 <div className="flex">
                   <div className="">
                     {info.personaname && (
-                      <p className="text-neutral-300 ml-48 text-lg font-semibold">
+                      <p className="text-black dark:text-dark dark:text-neutral-300 ml-48 text-lg font-semibold">
                         {info.personaname}
                       </p>
                     )}
                     {info.communityvisibilitystate === "3" ? (
                       <div className="flex">
                         <div className="ml-48  ">
-                          <p className=" text-base font-semibold text-neutral-300">
+                          <p className="text-base font-semibold text-black dark:text-dark dark:text-neutral-300 ">
                             Level
                           </p>
                         </div>
-                        <div className=" ml-2 items-center rounded-xl w-6 flex justify-center border ">
-                          <div className="text-neutral-300 text-xs ">
+                        <div className=" ml-2 items-center rounded-xl w-6 flex justify-center border border-black dark:border-white ">
+                          <div className="text-black dark:text-neutral-300 text-xs ">
                             {PlayerLevel.player_level}
                           </div>
                         </div>
@@ -361,8 +361,8 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
 
         <div className="gap-6 mt-24 grid lg:grid-cols-2 lg:text-lg md:text-sm sm:text-xs sm:grid-cols-1">
           <div className="">
-            <div className="flex flex-col justify-around bg-gray-400 dark:bg-custom-purple shadow-purple-500/50 p-5 shadow-sm rounded-md">
-              <div className="flex items-center justify-center text-neutral-300">
+            <div className="flex flex-col justify-around bg-gray-300 duration-300 dark:bg-custom-purple shadow-purple-500/50 p-5 shadow-sm rounded-md">
+              <div className="flex items-center justify-center text-black dark:text-neutral-300">
                 <p className="inter text-xl pr-3">Steam IDs</p>
                 <ApiOutlinedIcon />
               </div>
@@ -379,19 +379,19 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                   <div className="flex flex-col h-full justify-between gap-2">
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="text-neutral-300 lg:text-base inter">
+                        <p className="text-dark dark:text-neutral-300 lg:text-base inter">
                           Steam ID
                         </p>
                       </div>
-                      <div className="w-2/3 dark:hover:bg-custom-campos hover:bg-gray-500 duration-150 flex-1 p-2 border-r border-gray-500">
-                        <span className="inter lg:text-base text-neutral-300">
+                      <div className="w-2/3 dark:hover:bg-custom-campos hover:bg-gray-400 duration-150 flex-1 p-2 border-r border-gray-500">
+                        <span className="inter lg:text-base text-dark dark:text-neutral-300">
                           {info?.steamid}
                         </span>
                       </div>
 
                       {tooltipCopy === 0 ? (
                         <div
-                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          className="hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 cursor-pointer p-2"
                           onClick={() => [
                             copy(info?.steamid),
                             toolTipChange(),
@@ -399,34 +399,34 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                           ]}
                         >
                           <Tooltip title="Copy" placement="right">
-                            <ContentCopyIcon className="text-neutral-300" />
+                            <ContentCopyIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       ) : tooltipCopy === 1 ? (
                         <div
-                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          className="hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
                           onClick={() => [copy(info?.steamid), toolTipChange()]}
                         >
                           <Tooltip title="Copied" placement="right">
-                            <ContentCopyIcon className="text-neutral-300" />
+                            <ContentCopyIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       ) : null}
                     </div>
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className=" lg:text-base text-neutral-300 inter">
+                        <p className=" lg:text-base text-dark dark:text-neutral-300 inter">
                           Account ID
                         </p>
                       </div>
-                      <div className="w-2/3 hover:bg-custom-campos duration-150 flex-1 p-2 border-r border-gray-500">
-                        <span className=" lg:text-base inter text-neutral-300">
+                      <div className="w-2/3 hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 flex-1 p-2 border-r border-gray-500">
+                        <span className=" lg:text-base inter text-dark dark:text-neutral-300">
                           {info.accountId}
                         </span>
                       </div>
                       {tooltipCopy === 0 ? (
                         <div
-                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          className="hover:bg-gray-400 dark:hover:bg-custom-campos duration-150  cursor-pointer p-2"
                           onClick={() => [
                             copy(info?.accountId),
                             toolTipChange(),
@@ -434,37 +434,37 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                           ]}
                         >
                           <Tooltip title="Copy" placement="right">
-                            <ContentCopyIcon className="text-neutral-300" />
+                            <ContentCopyIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       ) : tooltipCopy === 1 ? (
                         <div
-                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          className="hover:bg-gray-400 dark:hover:bg-custom-campos duration-150  cursor-pointer p-2"
                           onClick={() => [
                             copy(info?.accountId),
                             toolTipChange(),
                           ]}
                         >
                           <Tooltip title="Copied" placement="right">
-                            <ContentCopyIcon className="text-neutral-300" />
+                            <ContentCopyIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       ) : null}
                     </div>
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="lg:text-base text-neutral-300 inter">
+                        <p className="lg:text-base text-dark dark:text-neutral-300 inter">
                           Steam2 ID
                         </p>
                       </div>
-                      <div className="w-2/3 hover:bg-custom-campos duration-150 flex-1 p-2 border-r border-gray-500">
-                        <span className="lg:text-base inter text-neutral-300">
+                      <div className="w-2/3 hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 flex-1 p-2 border-r border-gray-500">
+                        <span className="lg:text-base inter text-dark dark:text-neutral-300">
                           {info.steamId2}
                         </span>
                       </div>
                       {tooltipCopy === 0 ? (
                         <div
-                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          className="hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 cursor-pointer p-2"
                           onClick={() => [
                             copy(info?.steamId2),
                             toolTipChange(),
@@ -472,31 +472,31 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                           ]}
                         >
                           <Tooltip title="Copy" placement="right">
-                            <ContentCopyIcon className="text-neutral-300" />
+                            <ContentCopyIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       ) : tooltipCopy === 1 ? (
                         <div
-                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          className="hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 cursor-pointer p-2"
                           onClick={() => [
                             copy(info?.steamId2),
                             toolTipChange(),
                           ]}
                         >
                           <Tooltip title="Copied" placement="right">
-                            <ContentCopyIcon className="text-neutral-300" />
+                            <ContentCopyIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       ) : null}
                     </div>
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="lg:text-base text-neutral-300 inter">
+                        <p className="lg:text-base text-dark dark:text-neutral-300 inter">
                           Steam3 ID
                         </p>
                       </div>
-                      <div className="w-2/3 hover:bg-custom-campos duration-150 hover:bg-custom-campos duration-150 flex-1 p-2 border-r border-gray-500">
-                        <span className="lg:text-base text-neutral-300 inter">
+                      <div className="w-2/3 hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 duration-150 flex-1 p-2 border-r border-gray-500">
+                        <span className="lg:text-base text-dark dark:text-neutral-300 inter">
                           <a
                             href={`http://steamcommunity.com/profiles/[${info.steamId3}]`}
                             target="_blank"
@@ -509,7 +509,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                       </div>
                       {tooltipCopy === 0 ? (
                         <div
-                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          className="hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 cursor-pointer p-2"
                           onClick={() => [
                             copy(info?.steamId3),
                             toolTipChange(),
@@ -517,37 +517,37 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                           ]}
                         >
                           <Tooltip title="Copy" placement="right">
-                            <ContentCopyIcon className="text-neutral-300" />
+                            <ContentCopyIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       ) : tooltipCopy === 1 ? (
                         <div
-                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          className="hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 cursor-pointer p-2"
                           onClick={() => [
                             copy(info?.steamId3),
                             toolTipChange(),
                           ]}
                         >
                           <Tooltip title="Copied" placement="right">
-                            <ContentCopyIcon className="text-neutral-300" />
+                            <ContentCopyIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       ) : null}
                     </div>
                     <div className="flex  justify-between border rounded-md border-gray-500">
                       <div className="w-1/3  border-r p-2 border-gray-500">
-                        <p className="lg:text-base text-neutral-300 inter">
+                        <p className="lg:text-base text-dark dark:text-neutral-300 inter">
                           Steam HEX
                         </p>
                       </div>
-                      <div className="w-2/3 hover:bg-custom-campos duration-150 hover:bg-custom-campos duration-150 flex-1 p-2 border-r border-gray-500">
-                        <span className="lg:text-base inter text-neutral-300">
+                      <div className="w-2/3 hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 duration-150 flex-1 p-2 border-r border-gray-500">
+                        <span className="lg:text-base inter text-dark dark:text-neutral-300">
                           {info?.steamid}
                         </span>
                       </div>
                       {tooltipCopy === 0 ? (
                         <div
-                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          className="hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 cursor-pointer p-2"
                           onClick={() => [
                             copy(info?.steamid),
                             toolTipChange(),
@@ -555,16 +555,16 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                           ]}
                         >
                           <Tooltip title="Copy" placement="right">
-                            <ContentCopyIcon className="text-neutral-300" />
+                            <ContentCopyIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       ) : tooltipCopy === 1 ? (
                         <div
-                          className="hover:bg-custom-campos duration-150 rounded-md cursor-pointer p-2"
+                          className="hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 cursor-pointer p-2"
                           onClick={() => [copy(info?.steamid), toolTipChange()]}
                         >
                           <Tooltip title="Copied" placement="right">
-                            <ContentCopyIcon className="text-neutral-300" />
+                            <ContentCopyIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       ) : null}
@@ -574,8 +574,8 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
               </div>
             </div>
 
-            <div className="flex flex-col mt-6 sm:h- justify-around bg-custom-purple shadow-purple-500/50 p-5 shadow-sm rounded-md">
-              <div className="flex items-center justify-center text-neutral-300">
+            <div className="flex flex-col mt-6 sm:h- justify-around duration-300 dark:bg-custom-purple bg-gray-300 shadow-purple-500/50 p-5 shadow-sm rounded-md">
+              <div className="flex items-center justify-center text-dark dark:text-neutral-300">
                 <p className="text-xl inter pr-3">Ban Situation</p>
                 <GppMaybeOutlinedIcon />
               </div>
@@ -592,7 +592,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                   <div className="flex flex-col h-full justify-around gap-2">
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="lg:text-base text-neutral-300 inter">
+                        <p className="lg:text-base text-dark dark:text-neutral-300 inter">
                           Vac Ban
                         </p>
                       </div>
@@ -600,7 +600,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                       {vacStatus.VACBanned === true ? (
                         <div className="w-2/3 hover:bg-red-600 rounded-r-md duration-150 flex-1 p-2">
                           <div className="flex justify-between">
-                            <span className="lg:text-base text-neutral-300 inter ">
+                            <span className="lg:text-base text-dark dark:text-neutral-300 inter ">
                               {vacStatus.NumberOfVACBans} Vac Ban (
                               {vacStatus.DaysSinceLastBan}) days ago
                             </span>
@@ -609,35 +609,35 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                           </div>
                         </div>
                       ) : (
-                        <div className="w-2/3  hover:bg-custom-campos rounded-md duration-150 flex-1 p-2">
+                        <div className="w-2/3  hover:bg-gray-400 dark:hover:bg-custom-campos duration-150 flex-1 p-2">
                           <div className="flex justify-between">
-                            <span className="lg:text-base text-neutral-300">
+                            <span className="lg:text-base inter text-dark dark:text-neutral-300">
                               Good Situation
                             </span>
-                            <GppGoodOutlinedIcon className="text-neutral-300"></GppGoodOutlinedIcon>
+                            <GppGoodOutlinedIcon className="text-dark dark:text-neutral-300"></GppGoodOutlinedIcon>
                           </div>
                         </div>
                       )}
                     </div>
-                    <div className="flex justify-between border rounded-md border-gray-500">
+                    <div className="flex justify-between border  border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="lg:text-base text-neutral-300 inter">
+                        <p className="lg:text-base text-dark dark:text-neutral-300 inter">
                           Game Ban
                         </p>
                       </div>
                       {vacStatus.NumberOfGameBans === 0 ? (
-                        <div className="w-2/3 hover:bg-custom-campos rounded-md duration-150 flex-1 p-2">
+                        <div className="w-2/3 hover:bg-gray-400 dark:hover:bg-custom-campos  duration-150 flex-1 p-2">
                           <div className="flex justify-between">
-                            <span className="lg:text-base inter text-neutral-300">
+                            <span className="lg:text-base inter text-dark dark:text-neutral-300">
                               Good Situation
                             </span>
-                            <GppGoodOutlinedIcon className="text-neutral-300" />
+                            <GppGoodOutlinedIcon className="text-dark dark:text-neutral-300" />
                           </div>
                         </div>
                       ) : vacStatus.NumberOfGameBans === 1 ? (
                         <div className="w-2/3 hover:bg-red-600 rounded-r-md duration-150 flex-1 p-2">
                           <div className="flex justify-between">
-                            <span className="lg:text-base inter text-neutral-300">
+                            <span className="lg:text-base inter text-dark dark:text-neutral-300">
                               {vacStatus.NumberOfGameBans} Game Banned
                             </span>
                             <GppMaybeOutlinedIcon className="text-red-800" />
@@ -646,7 +646,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                       ) : vacStatus.NumberOfGameBans > 1 ? (
                         <div className="w-2/3 hover:bg-red-600 rounded-r-md duration-150 flex-1 p-2">
                           <div className="flex justify-between">
-                            <span className="lg:text-base inter text-neutral-300">
+                            <span className="lg:text-base inter text-dark dark:text-neutral-300">
                               {vacStatus.NumberOfGameBans} Games Banned
                             </span>
                             <GppMaybeOutlinedIcon className="text-red-800" />
@@ -654,50 +654,50 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                         </div>
                       ) : null}
                     </div>
-                    <div className="flex justify-between border rounded-md border-gray-500">
+                    <div className="flex justify-between border  border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="lg:text-base inter text-neutral-300">
+                        <p className="lg:text-base inter text-dark dark:text-neutral-300">
                           Comm. Ban
                         </p>
                       </div>
-                      <div className="w-2/3  hover:bg-custom-campos rounded-md duration-150 flex-1 p-2">
+                      <div className="w-2/3  hover:bg-gray-400 dark:hover:bg-custom-campos  duration-150 flex-1 p-2">
                         {vacStatus.CommunityBanned == false ? (
                           <div className="flex justify-between">
-                            <span className="lg:text-base inter text-neutral-300">
+                            <span className="lg:text-base inter text-dark dark:text-neutral-300">
                               Good Situation
                             </span>
-                            <GppGoodOutlinedIcon className="text-neutral-300"></GppGoodOutlinedIcon>
+                            <GppGoodOutlinedIcon className="text-dark dark:text-neutral-300"></GppGoodOutlinedIcon>
                           </div>
                         ) : (
                           <div className="flex justify-between">
-                            <span className="lg:text-base inter text-neutral-300">
+                            <span className="lg:text-base inter text-dark dark:text-neutral-300">
                               Not Good Situation
                             </span>
-                            <GppMaybeOutlinedIcon className="text-neutral-300"></GppMaybeOutlinedIcon>
+                            <GppMaybeOutlinedIcon className="text-dark dark:text-neutral-300"></GppMaybeOutlinedIcon>
                           </div>
                         )}
                       </div>
                     </div>
-                    <div className="flex justify-between border rounded-md border-gray-500">
+                    <div className="flex justify-between border  border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="lg:text-base text-neutral-300 inter">
+                        <p className="lg:text-base text-dark dark:text-neutral-300 inter">
                           Trade Ban
                         </p>
                       </div>
-                      <div className="w-2/3  hover:bg-custom-campos rounded-md duration-150 flex-1 p-2">
+                      <div className="w-2/3  hover:bg-gray-400 dark:hover:bg-custom-campos  duration-150 flex-1 p-2">
                         {vacStatus.EconomyBan == "none" ? (
                           <div className="flex justify-between">
-                            <span className="lg:text-base text-neutral-300">
+                            <span className="lg:text-base inter text-dark dark:text-neutral-300">
                               Good Situation
                             </span>
-                            <GppGoodOutlinedIcon className="text-neutral-300"></GppGoodOutlinedIcon>
+                            <GppGoodOutlinedIcon className="text-dark dark:text-neutral-300"></GppGoodOutlinedIcon>
                           </div>
                         ) : (
                           <div className="flex justify-between">
-                            <span className="lg:text-base text-neutral-300">
+                            <span className="lg:text-base text-dark dark:text-neutral-300">
                               Not Good Situation
                             </span>
-                            <GppMaybeOutlinedIcon className="text-neutral-300"></GppMaybeOutlinedIcon>
+                            <GppMaybeOutlinedIcon className="text-dark dark:text-neutral-300"></GppMaybeOutlinedIcon>
                           </div>
                         )}
                       </div>
@@ -708,8 +708,8 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
             </div>
           </div>
           <div>
-            <div className="flex flex-col sm:h- justify-between bg-custom-purple shadow-purple-500/50 p-5 shadow-sm rounded-md">
-              <div className="flex items-center justify-center text-neutral-300">
+            <div className="flex flex-col sm:h- justify-between duration-300 dark:bg-custom-purple bg-gray-300 shadow-purple-500/50 p-5 shadow-sm rounded-md">
+              <div className="flex items-center justify-center text-dark dark:text-neutral-300">
                 <p className="text-xl inter pr-3">Played Hours</p>
                 <AccessTimeIcon />
               </div>
@@ -726,14 +726,14 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                   <div className="flex flex-col h-full justify-between gap-2">
                     <div className="flex justify-between border rounded-md border-gray-500">
                       <div className="w-1/3 border-r p-2 border-gray-500">
-                        <p className="lg:text-base text-neutral-300 inter">
+                        <p className="lg:text-base text-dark dark:text-neutral-300 inter">
                           Total Hours
                         </p>
                       </div>
 
-                      <div className="w-2/3 hover:bg-custom-campos rounded-r-md duration-150 flex-1 p-2">
+                      <div className="w-2/3 hover:bg-gray-400 dark:hover:bg-custom-campos rounded-r-md duration-150 flex-1 p-2">
                         <div className="flex justify-between">
-                          <span className="lg:text-base text-neutral-300 inter ">
+                          <span className="lg:text-base text-dark dark:text-neutral-300 inter ">
                             {hoursPlayed.totalHours} hours
                           </span>
                           <Tooltip
@@ -754,7 +754,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                             }
                             placement="right"
                           >
-                            <AccessTimeIcon className="text-neutral-300" />
+                            <AccessTimeIcon className="text-dark dark:text-neutral-300" />
                           </Tooltip>
                         </div>
                       </div>
