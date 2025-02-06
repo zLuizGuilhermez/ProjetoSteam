@@ -56,19 +56,20 @@ const Carousel = ({ card }) => {
         <div className="flex relative w-full h-full justify-center">
           {card.map((item, index) => {
             const position = index - activeIndex;
-            const opacity = Math.abs(position) > 1 ? 0 : 1;
-            const pointerEvents = opacity === 0 ? "none" : "auto";
+            const isVisible = Math.abs(position) <= 1;
+            const pointerEvents = isVisible ? "auto" : "none";
 
             return (
               <motion.div
                 key={index}
-                className="border-r-4 border-b-4 border-purple-600 shadow-lg lg:w-52 lg:h-72 xs:w-52 xs:h=72 md:w-44 md:h-72 sm:w-52 sm:h-72 w-36 h-72 cursor-pointer absolute"
+                className={`border-r-4 border-b-4 border-purple-600 shadow-lg lg:w-52 lg:h-72 xs:w-52 xs:h=72 md:w-44 md:h-72 sm:w-52 sm:h-72 w-36 h-72 cursor-pointer absolute ${
+                  isVisible ? "" : "hidden"
+                }`}
                 onClick={() => handleClick(index)}
                 animate={{
                   x: position * mediaTransition,
                   scale: activeIndex === index ? 1.1 : 1,
                   zIndex: activeIndex === index ? 20 : 10,
-                  opacity: opacity,
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 style={{ pointerEvents }}
