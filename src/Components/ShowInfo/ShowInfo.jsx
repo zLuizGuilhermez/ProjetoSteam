@@ -12,7 +12,7 @@ import GppMaybeOutlinedIcon from "@mui/icons-material/GppMaybeOutlined";
 import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
 import SearchIcon from '@mui/icons-material/Search';
 
-const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
+const ShowInfo = ({ id, Componente, theme, trocarComponente, toCarrouselHome }) => {
   const [info, setInfo] = useState({});
   const [forValidation, setForValidation] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,6 +30,10 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
   const toolTipChangeAwait = () => {
     setTimeout(() => setToolTipCopy(0), 1000);
   };
+
+  const toCarrousel = (card) =>{
+    toCarrouselHome(card)
+  }
 
   //função para mudar o estado do id
   const handleInputChange = (event) => {
@@ -56,13 +60,18 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
       const responseLevel = await axios.get(
         `https://backendsteamproject-production.up.railway.app/api/infoController/toGetPlayerLevel/${id}`
       );
+    
 
       let responseHours = { data: null };
 
       if (response.data.communityvisibilitystate !== "1") {
-        responseHours = await axios.get(
+        const responseHours = await axios.get(
           `https://backendsteamproject-production.up.railway.app/api/infoController/toGetHoursPlayed/${id}`
         );
+        const responseGames = await axios.get(
+          `https://backendsteamproject-production.up.railway.app/api/infoController/toGetGames/${id}`
+        );
+        toCarrousel(responseGames.data);
         setHoursPlayed(responseHours.data);
       }
 
@@ -217,7 +226,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
 
   if (Componente === "new") {
     return (
-      <div className="border shadow-2xl  lg:w-2/3 sm:w-3/4 h-full border-2 border-gray-500 flex flex-col rounded-lg gap-4 md:p-4 g:p-6 sm:p-3 bg-transparent content-around mb-9">
+      <div className="border shadow-2xl  lg:w-2/3 sm:w-3/4 h-full border-2 border-gray-500 flex flex-col rounded-lg gap-4 md:p-4 lg:p-9 sm:p-3 bg-transparent content-around mb-9">
         <div className="flex justify-center items-center h-14">
           <div className=" dark:bg-custom-black duration-300 bg-slate-200 w-1/2 h-14 flex justify-center items-center">
             <div className="border-2 w-full flex border-purple-500 rounded-md">
@@ -233,7 +242,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente }) => {
                   sx={{
                     color: "purple",
                     "&:hover": {
-                      borderColor: "purple", // Cor da borda ao passar o mouse
+                      borderColor: "purple",
                     },
                   }}
                   onClick={() => {

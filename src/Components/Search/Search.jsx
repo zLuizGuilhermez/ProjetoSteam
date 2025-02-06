@@ -147,12 +147,13 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
 
   if (Componente === "old") {
     return (
-      <div className="w-full max-w-6xl mx-auto lg:mx-0 flex items-center px-4 sm:px-4 md:px-24 lg:px-0">
+      <div className="lg:w-2/3 md:w-2/3 sm:w-full xs:mx-2 sm:mx-4 lg:mx-0 flex items-center lg:px-0">
         <div className="border shadow-2xl border-2 border-gray-500 flex flex-col rounded-lg gap-4 h-full w-full relative p-6 sm:p-6 bg-transparent">
+          
           {/* Título */}
-          <div className="flex break-words flex-wrap items-center h-24 w-full">
+          <div className="flex break-words flex-wrap items-center h-auto w-full">
             <p
-              className={`inter cor-${theme} lg:text-8xl md:text-6xl sm:text-5xl bg-clip-text text-transparent`}
+              className={`inter cor-${theme} xs:text-4xl lg:text-8xl md:text-6xl sm:text-5xl bg-clip-text text-transparent`}
             >
               Steam
               <span className="inter font-extrabold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text pl-2 text-transparent">
@@ -160,22 +161,21 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
               </span>
             </p>
           </div>
-
+  
           {/* Texto de boas-vindas */}
-          <div className="lg:w-2/3 sm:w-full">
+          <div className="lg:w-2/3 sm:w-2/3">
             <p
-              className={`inter corTexto-${theme} text-wrap text-lg sm:text-2xl bg-clip-text text-transparent break-words`}
+              className={`inter corTexto-${theme} text-wrap text-lg sm:text-2xl md:text-xl bg-clip-text text-transparent break-words`}
             >
               Welcome to{" "}
               <span className="text-purple-400 duration-300">Steam Infofinder</span>, a
-              platform for
-              
-              searching Steam user informations
+              platform for searching Steam user information.
             </p>
           </div>
-          <div className="w-2/3">
+          
+          <div className="w-full sm:w-2/3 md:w-2/3">
             <p
-              className={`text-sm corTexto-${theme} sm:text-base gap-y-60 inter bg-clip-text text-transparent break-words`}
+              className={`text-sm corTexto-${theme} sm:text-base gap-y-4 inter bg-clip-text text-transparent break-words`}
             >
               Have you ever thought about gathering all relevant information
               about a user in one place? <br />
@@ -183,10 +183,10 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
               profile link and search!
             </p>
           </div>
-
+  
           {/* Barra de pesquisa */}
-          <div className="pt-32">
-            <div className="mt-4 shadow-2xl w-full border-2 rounded-lg border-purple-500  lg:w-2/3 md:w-2/3 sm:w-full h-14 flex">
+          <div className="pt-12 lg:pt-32">
+            <div className="mt-4 shadow-2xl w-full border-2 rounded-lg border-purple-500 lg:w-2/3 md:w-2/3 sm:w-full h-14 flex">
               <input
                 onChange={change}
                 type="text"
@@ -207,6 +207,6 @@ const Search = ({ saveid, theme, trocarComponente, Componente }) => {
       </div>
     );
   }
-};
+};  
 
 export default Search;

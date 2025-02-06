@@ -18,7 +18,7 @@ const Navbar = ({ theme, setTheme }) => {
   };
 
   return (
-    <div className="w-full sm:w-2/3 flex items-center mt-20 justify-between border-2 border-gray-500 rounded-lg bg-transparent shadow-xl p-4 text-white h-14">
+    <div className="w-full sm:w-full sm:mx-4 md:w-2/3 xs:mx-2 flex items-center mt-20 justify-between border-2 border-gray-500 rounded-lg bg-transparent shadow-xl p-4 text-white h-14">
       <div className="flex items-center space-x-2">
         <a href="" className="text-xl font-bold">
           <span className={`corLogo-${theme} bg-clip-text text-transparent`}>
