@@ -5,18 +5,23 @@ import Search from "../../Components/Search/Search";
 import ShowInfo from "../../Components/ShowInfo/ShowInfo";
 import ErrorPage from "../../Components/ErrorPage/ErrorPage";
 import ErrorPageSearch from "../../Components/ErrorPageSearch/ErrorPageSearch";
-import { Analytics } from "@vercel/analytics/react"
-// import Carousel from "../../Components/Carousel/Carousel";
+import { Analytics } from "@vercel/analytics/react";
+import Carousel from "../../Components/Carousel/Carousel";
 
 const Home = () => {
   const [theme, setTheme] = useState("dark");
   const [componente, setComponente] = useState("old");
   const [id, setId] = useState("");
+  const [card,setCard] = useState();
 
   const saveid = (newId) => {
     setId(newId);
     console.log("ID recebido:", newId);
   };
+
+  const toCarrouselHome = (card) =>{
+    setCard(card)
+  }
 
   const trocarComponente = (estado) => {
     setComponente(estado);
@@ -56,9 +61,9 @@ const Home = () => {
       {componente === "new" && (
         <div className="w-full">
           <div className="flex flex-col items-center mt-12 h-auto">
-            <ShowInfo id={id} trocarComponente={trocarComponente} Componente={componente} theme={theme} />
+            <ShowInfo id={id} toCarrouselHome={toCarrouselHome} trocarComponente={trocarComponente} Componente={componente} theme={theme} />
 
-            {/* <Carousel></Carousel>     */}
+            <Carousel card={card}></Carousel>    
 
           </div>
         </div>

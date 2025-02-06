@@ -14,7 +14,8 @@ export default {
         'custom-campos': 'rgb(34, 15, 51)',    // Corrigido
       },
       screens: {
-        sm: '390px',  // Pequenas telas
+        xs: '320px',  // Telas pequenas
+        sm: '440px',  // Pequenas telas
         md: '810px',  // Médias telas
         lg: '1440px', // Telas grandes
       },
