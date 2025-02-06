@@ -49,7 +49,7 @@ const Carousel = ({ card }) => {
     <div className="border shadow-2xl flex justify-center lg:w-2/3 sm:w-3/4 w-full h-full border-2 border-gray-500 rounded-lg gap-4 md:p-4 lg:p-9 sm:p-3 p-2 bg-transparent mb-9">
       <div className="flex flex-col w-full lg:w-[47rem] text-4xl gap-9 items-center justify-center h-[25rem] relative">
         <div>
-          <p className="lg:text-4xl md:text-3xl sm:text-lg xs:text-base text-white inter text-center">
+          <p className="lg:text-4xl md:text-3xl sm:text-lg xs:text-base duration-300 dark:text-white text-dark inter text-center">
             Most games played in the last 2 weeks
           </p>
         </div>
@@ -114,13 +114,13 @@ const Carousel = ({ card }) => {
           })}
         </div>
         <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 text-white p-2 rounded-md"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 rounded-md dark:text-white text-black bg-transparent"
           onClick={handlePrevClick}
         >
           &lt;
         </button>
         <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 text-white p-2 rounded-md"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 rounded-md dark:text-white text-black bg-transparent"
           onClick={handleNextClick}
         >
           &gt;
