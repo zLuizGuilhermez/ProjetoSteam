@@ -30,6 +30,8 @@ const Carousel = ({ card }) => {
         setMediaTransition(180);
       } else if (window.innerWidth >= 440) {
         setMediaTransition(0);
+      }else if (window.innerWidth >= 0) {
+        setMediaTransition(0);
       }
     };
 
