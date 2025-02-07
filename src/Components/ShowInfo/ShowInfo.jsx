@@ -275,6 +275,8 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente, toCarrouselHome }) 
                 src={info.background}
                 loop
                 autoPlay
+                playsinline
+                muted
                 className="w-full h-full object-cover border-2 border-gray-500 rounded-md"
               />
               <div className="transform flex items-center gap-4">
