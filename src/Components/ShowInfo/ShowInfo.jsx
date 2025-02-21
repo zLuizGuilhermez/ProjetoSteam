@@ -10,9 +10,15 @@ import Button from "@mui/material/Button";
 import ApiOutlinedIcon from "@mui/icons-material/ApiOutlined";
 import GppMaybeOutlinedIcon from "@mui/icons-material/GppMaybeOutlined";
 import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 
-const ShowInfo = ({ id, Componente, theme, trocarComponente, toCarrouselHome }) => {
+const ShowInfo = ({
+  id,
+  Componente,
+  theme,
+  trocarComponente,
+  toCarrouselHome,
+}) => {
   const [info, setInfo] = useState({});
   const [forValidation, setForValidation] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,6 +26,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente, toCarrouselHome }) 
   const [PlayerLevel, setPlayerlevel] = useState("");
   const [tooltipCopy, setToolTipCopy] = useState(0);
   const [hoursPlayed, setHoursPlayed] = useState("");
+  const [background, setBackground] = useState("");
 
   //função para mudar o estado do tooltip
   const toolTipChange = (status) => {
@@ -31,15 +38,14 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente, toCarrouselHome }) 
     setTimeout(() => setToolTipCopy(0), 1000);
   };
 
-  const toCarrousel = (card) =>{
-    toCarrouselHome(card)
-  }
+  const toCarrousel = (card) => {
+    toCarrouselHome(card);
+  };
 
   //função para mudar o estado do id
   const handleInputChange = (event) => {
     setForValidation(event.target.value);
   };
-
   //função para copiar o texto
   const copy = (value) => {
     navigator.clipboard.writeText(value);
@@ -49,35 +55,40 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente, toCarrouselHome }) 
   const fetchInfo = async (id) => {
     try {
       setLoading(true);
+
       const response = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toInfoService/${id}`
+        `http://localhost:8080/api/infoController/toGetInfo/${id}`
+      );
+      
+      const responseBackground = await axios.get(
+        `http://localhost:8080/api/infoController/toGetBackground/${response.data.steamId3}`
       );
 
       const responseVac = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toGetBanList/${id}`
+        `http://localhost:8080/api/infoController/toGetBanList/${id}`
       );
-
+      
       const responseLevel = await axios.get(
-        `https://backendsteamproject-production.up.railway.app/api/infoController/toGetPlayerLevel/${id}`
+        `http://localhost:8080/api/infoController/toGetPlayerLevel/${id}`
       );
-    
-
+      
       let responseHours = { data: null };
-
+      
       if (response.data.communityvisibilitystate !== "1") {
         const responseHours = await axios.get(
-          `https://backendsteamproject-production.up.railway.app/api/infoController/toGetHoursPlayed/${id}`
+          `http://localhost:8080/api/infoController/toGetHoursPlayed/${id}`
         );
         const responseGames = await axios.get(
-          `https://backendsteamproject-production.up.railway.app/api/infoController/toGetGames/${id}`
+          `http://localhost:8080/api/infoController/toGetGames/${id}`
         );
         toCarrousel(responseGames.data);
         setHoursPlayed(responseHours.data);
       }
-
+      
+      setBackground(responseBackground.data);
+      setInfo(response.data);
       setVacStatus(responseVac.data);
       setPlayerlevel(responseLevel.data);
-      setInfo(response.data);
     } catch (error) {
       console.error("Erro ao buscar informações:", error);
     } finally {
@@ -269,10 +280,10 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente, toCarrouselHome }) 
               animation="wave"
               sx={{ bgcolor: "grey.900" }}
             />
-          ) : info && info.status === 1 ? (
+          ) : info && background.status === 1 ? (
             <div className="w-full h-full relative">
               <video
-                src={info.background}
+                src={background.url}
                 loop
                 autoPlay
                 playsinline
@@ -311,7 +322,7 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente, toCarrouselHome }) 
                           <p className=" text-base font-semibold text-red-700">
                             Private Profile
                           </p>
-                          </div>
+                        </div>
                       </div>
                     ) : null}
                     <div className="ml-48 mt-1 h-6 w-6">
@@ -324,10 +335,10 @@ const ShowInfo = ({ id, Componente, theme, trocarComponente, toCarrouselHome }) 
                 </div>
               </div>
             </div>
-          ) : info && info.status === 2 ? (
+          ) : info && background.status === 2 ? (
             <div className="w-full h-full relative">
               <img
-                src={info.background}
+                src={background.url}
                 loop
                 autoPlay
                 className="w-full h-full object-cover border-2 border-gray-500 rounded-md"
